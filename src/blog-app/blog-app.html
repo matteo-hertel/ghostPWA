@@ -1,0 +1,46 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
+<link rel="import" href="../mediators/blog-posts-mediator.html">
+<link rel="import" href="../temp/blog-posts.html">
+<dom-module id="blog-app">
+  <template>
+    <style>
+       :host {
+        display: block;
+      }
+    </style>
+    <iron-meta key="config" value="{{config}}"></iron-meta>
+    <blog-posts-mediator>
+      <blog-posts></blog-posts>
+    </blog-posts-mediator>
+     
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class BlogApp extends Polymer.Element {
+      static get is() {
+        return 'blog-app';
+      }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'blog-app'
+          },
+          config: {
+            type: Object
+          }
+        };
+      }
+      connectedCallback() {
+        super.connectedCallback();
+      }
+    }
+
+    window.customElements.define(BlogApp.is, BlogApp);
+  </script>
+</dom-module>

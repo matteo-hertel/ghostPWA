@@ -1,0 +1,54 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="blog-posts-mediator">
+  <template>
+    <style>
+       :host {
+        display: block;
+      }
+    </style>
+    <iron-meta key="config" value="{{config}}"></iron-meta>
+    <iron-ajax id="postsRequest" handle-as="json" on-response="handleResponse" on-error="handleError"></iron-ajax>
+    <slot></slot>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class BlogPostsMediator extends Polymer.Element {
+      static get is() {
+        return 'blog-posts-mediator';
+      }
+      static get properties() {
+        return {
+          posts: {
+            type: Array,
+            observer: "_reflectOnChildren"
+          },
+          config: {
+            type: Object
+          }
+        };
+      }
+      connectedCallback() {
+        super.connectedCallback();
+        this.$.postsRequest.url = this.config.getAPIUrl('posts');
+        this.$.postsRequest.generateRequest();
+      }
+      handleError(x, y, z) {
+        console.log(x, y, z);
+      }
+      handleResponse(e, request) {
+        this.posts = e.detail.response.posts;
+      }
+      _reflectOnChildren(n, o){
+        this.firstElementChild.posts = n;
+      }
+    }
+
+    window.customElements.define(BlogPostsMediator.is, BlogPostsMediator);
+  </script>
+</dom-module>

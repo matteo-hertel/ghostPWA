@@ -1,0 +1,7 @@
+{
+  "name": "blog-app",
+  "short_name": "blog-app",
+  "description": "A SPA/PWA for ghost",
+  "start_url": "/",
+  "display": "standalone"
+}

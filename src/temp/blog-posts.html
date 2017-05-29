@@ -1,0 +1,37 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="blog-posts">
+    <template>
+        <style>
+             :host {
+                display: block;
+            }
+        </style>
+        LOOOOOL
+        <pre>{{_format(posts)}}</pre>
+    </template>
+
+    <script>
+        /**
+         * @customElement
+         * @polymer
+         */
+        class BlogPosts extends Polymer.Element {
+            static get is() {
+                return 'blog-posts';
+            }
+            static get properties() {
+                return {
+                    posts: {
+                        type: Array
+                    }
+                };
+            }
+            _format(data) {
+                return JSON.stringify(data, null, 4);
+            }
+        }
+
+        window.customElements.define(BlogPosts.is, BlogPosts);
+    </script>
+</dom-module>

@@ -1,0 +1,51 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
+
+<dom-module id="blog-config">
+    <template>
+        <style>
+             :host {
+                display: none;
+            }
+        </style>
+        <iron-meta key="config" value="[[config]]"></iron-meta>
+        <iron-meta key="lol" value="foo"></iron-meta>
+
+    </template>
+
+    <script>
+        /**
+         * `blog-config`
+         * Ghost blog config component
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class Blogconfig extends Polymer.Element {
+            static get is() {
+                return 'blog-config';
+            }
+            static get properties() {
+                let staticConfig = {
+                    baseUrl: `http://localhost:8112/ghost/api/v0.1/`,
+                    client_id: "ghost-frontend",
+                    client_secret: "f547b266db26"
+                }
+                let dynamicConfig = {
+                    getAPIUrl: (path) => {
+                        return `${staticConfig.baseUrl}${path}?client_id=${staticConfig.client_id}&client_secret=${staticConfig.client_secret}`;
+                    }
+                }
+                return {
+                    config: {
+                        type: Object,
+                        value: Object.assign(staticConfig, dynamicConfig)
+                    }
+                }
+            }
+        }
+
+        window.customElements.define(Blogconfig.is, Blogconfig);
+    </script>
+</dom-module>
