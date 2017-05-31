@@ -44,8 +44,11 @@
       handleResponse(e, request) {
         this.posts = e.detail.response.posts;
       }
-      _reflectOnChildren(n, o){
-        this.firstElementChild.posts = n;
+      _reflectOnChildren(n, o) {
+        let children = [...this.children];
+        children.map((child) => {
+          child.posts = n;
+        })
       }
     }
 

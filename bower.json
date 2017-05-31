@@ -5,7 +5,8 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
     "iron-meta": "^2.0.0",
-    "iron-ajax": "^2.0.2"
+    "iron-ajax": "^2.0.2",
+    "iron-pages": "^2.0.0"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
