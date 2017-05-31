@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../mediators/blog-posts-mediator.html">
 <link rel="import" href="../temp/blog-posts.html">
 <dom-module id="blog-app">
@@ -10,10 +11,16 @@
       }
     </style>
     <iron-meta key="config" value="{{config}}"></iron-meta>
-    <blog-posts-mediator>
-      <blog-posts></blog-posts>
-    </blog-posts-mediator>
-     
+    <iron-pages id="pages" attr-for-selected="name" selected=[[currentPage]] selected-attribute="active" fallback-selection="404">
+      <blog-posts-mediator name="posts">
+        <blog-posts></blog-posts>
+      </blog-posts-mediator>
+      <div name="one">One</div>
+      <div name="two">Two</div>
+      <div name="404">not found</div>
+    </iron-pages>
+
+
   </template>
 
   <script>
@@ -27,17 +34,24 @@
       }
       static get properties() {
         return {
-          prop1: {
-            type: String,
-            value: 'blog-app'
-          },
           config: {
             type: Object
+          },
+          currentPage: {
+            type: String,
+            value: "posts"
           }
         };
       }
       connectedCallback() {
         super.connectedCallback();
+        document.addEventListener('click', (e) => {
+          var pages = this.$.pages;
+          pages.selectNext();
+        });
+      }
+      _handleSelect(e) {
+        console.log(e);
       }
     }
 

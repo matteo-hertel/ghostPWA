@@ -30,13 +30,20 @@
           },
           config: {
             type: Object
+          },
+          name: {
+            type: String
+          },
+          active: {
+            type: Boolean,
+            value: false,
+            observer: "_activationAction"
           }
         };
       }
       connectedCallback() {
         super.connectedCallback();
-        this.$.postsRequest.url = this.config.getAPIUrl('posts');
-        this.$.postsRequest.generateRequest();
+
       }
       handleError(x, y, z) {
         console.log(x, y, z);
@@ -49,6 +56,14 @@
         children.map((child) => {
           child.posts = n;
         })
+      }
+      _activationAction(n, o) {
+        console.log(n, o);
+        if (n === false || this.posts) {
+          return;
+        }
+        this.$.postsRequest.url = this.config.getAPIUrl('posts');
+        this.$.postsRequest.generateRequest();
       }
     }
 
