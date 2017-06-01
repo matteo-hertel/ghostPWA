@@ -1,8 +1,12 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
 <link rel="import" href="../mediators/blog-posts-mediator.html">
 <link rel="import" href="../temp/blog-posts.html">
+<link rel="import" href="../mediators/blog-post-mediator.html">
+<link rel="import" href="../temp/blog-post.html">
 <dom-module id="blog-app">
   <template>
     <style>
@@ -11,12 +15,25 @@
       }
     </style>
     <iron-meta key="config" value="{{config}}"></iron-meta>
-    <iron-pages id="pages" attr-for-selected="name" selected=[[currentPage]] selected-attribute="active" fallback-selection="404">
-      <blog-posts-mediator name="posts">
+
+    <app-location route="{{route}}"></app-location>
+    <app-route route="{{route}}" pattern="/:page" data="{{data}}" tail="{{tail}}">
+    </app-route>
+
+    <iron-pages id="pages" attr-for-selected="name" selected=[[selectedRoute]] selected-attribute="active" fallback-selection="404">
+      <div name="home">Homepage
+
+        <a href="/post/welcome-to-ghost">Post</a>
+      </div>
+
+      <blog-posts-mediator name="posts" subroute=[[tail]]>
         <blog-posts></blog-posts>
       </blog-posts-mediator>
-      <div name="one">One</div>
-      <div name="two">Two</div>
+
+      <blog-post-mediator name="post" subroute=[[tail]]>
+        <blog-post></blog-post>
+      </blog-post-mediator>
+
       <div name="404">not found</div>
     </iron-pages>
 
@@ -37,21 +54,37 @@
           config: {
             type: Object
           },
-          currentPage: {
+          route: {
+            type: Object
+          },
+          data: {
+            type: Object
+          },
+          tail: {
+            type: Object
+          },
+          selectedRoute: {
             type: String,
-            value: "posts"
+            computed: "_computeSelectedRoute(data)"
           }
         };
       }
-      connectedCallback() {
-        super.connectedCallback();
-        document.addEventListener('click', (e) => {
-          var pages = this.$.pages;
-          pages.selectNext();
-        });
+      ready() {
+        super.ready();
+        this.addEventListeners();
       }
-      _handleSelect(e) {
-        console.log(e);
+      addEventListeners() {
+        this.addEventListener('404', e => this.changeRoute("not-found"));
+      }
+      changeRoute(route) {
+        window.history.pushState({}, null, `/${route}`);
+        window.dispatchEvent(new CustomEvent('location-changed'));
+      }
+      _computeSelectedRoute(data) {
+        if (!data.page) {
+          return "home";
+        }
+        return data.page
       }
     }
 
