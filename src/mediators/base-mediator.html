@@ -1,0 +1,49 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<dom-module id="base-mediator">
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class BaseMediator extends Polymer.Element {
+      static get is() {
+        return 'base-mediator';
+      }
+      static get properties() {
+        return {
+          data: {
+            observer: "_reflectOnChildren",
+          },
+          childrenProperty: {
+            type: String,
+            value: "data",
+          },
+          active: {
+            type: Boolean,
+            value: false,
+            observer: "_activationAction"
+          }
+        };
+      }
+      _reflectOnChildren(n, o) {
+        let children = [...this.children];
+        children.map((child) => {
+          child[this.childrenProperty] = n;
+        })
+      }
+      activateComponent() {
+      }
+      deactivateComponent() {
+      }
+      _activationAction(n, o) {
+        if (n === false) {
+          return this.deactivateComponent();
+        }
+        return this.activateComponent();
+      }
+    }
+
+    window.customElements.define(BaseMediator.is, BaseMediator);
+  </script>
+</dom-module>

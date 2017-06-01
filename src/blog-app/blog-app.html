@@ -3,9 +3,11 @@
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../bower_components/app-route/app-location.html">
+<!--<link rel="import" href="../mediators/blog-posts-mediator.html">-->
 <link rel="import" href="../mediators/blog-posts-mediator.html">
 <link rel="import" href="../temp/blog-posts.html">
 <link rel="import" href="../mediators/blog-post-mediator.html">
+<link rel="import" href="../mediators/base-mediator.html">
 <link rel="import" href="../temp/blog-post.html">
 <dom-module id="blog-app">
   <template>
@@ -14,18 +16,17 @@
         display: block;
       }
     </style>
-    <iron-meta key="config" value="{{config}}"></iron-meta>
-
     <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="/:page" data="{{data}}" tail="{{tail}}">
     </app-route>
 
     <iron-pages id="pages" attr-for-selected="name" selected=[[selectedRoute]] selected-attribute="active" fallback-selection="404">
-      <div name="home">Homepage
+      <base-mediator name="home">
+        <div>Homepage
 
-        <a href="/post/welcome-to-ghost">Post</a>
-      </div>
-
+          <a href="/post/welcome-to-ghost">Post</a>
+        </div>
+      </base-mediator>
       <blog-posts-mediator name="posts" subroute=[[tail]]>
         <blog-posts></blog-posts>
       </blog-posts-mediator>
@@ -51,9 +52,6 @@
       }
       static get properties() {
         return {
-          config: {
-            type: Object
-          },
           route: {
             type: Object
           },

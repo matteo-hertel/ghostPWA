@@ -1,3 +1,4 @@
+<link rel="import" href="./base-mediator.html">
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
@@ -23,15 +24,15 @@
      * @customElement
      * @polymer
      */
-    class BlogPostMediator extends Polymer.Element {
+    class BlogPostMediator extends BaseMediator {
       static get is() {
         return 'blog-post-mediator';
       }
       static get properties() {
         return {
-          post: {
-            type: Array,
-            observer: "_reflectOnChildren"
+          childrenProperty: {
+            type: String,
+            value: "post",
           },
           subroute: {
             type: Object
@@ -41,35 +42,17 @@
           },
           config: {
             type: Object
-          },
-          name: {
-            type: String
-          },
-          active: {
-            type: Boolean,
-            value: false,
-            observer: "_activationAction"
           }
         };
-      }
-      connectedCallback() {
-        super.connectedCallback();
-
       }
       handleError(x, y, z) {
         console.log(x, y, z);
       }
       handleResponse(e, request) {
-        this.post = e.detail.response.posts[0];
+        this.data = e.detail.response.posts[0];
       }
-      _reflectOnChildren(n, o) {
-        let children = [...this.children];
-        children.map((child) => {
-          child.post = n;
-        })
-      }
-      _activationAction(n, o) {
-        if (n === false || this.post) {
+      activateComponent() {
+        if (this.post) {
           return;
         }
         if (!this.subrouteData.slug) {
@@ -80,10 +63,9 @@
         this.$.postRequest.generateRequest();
       }
       postNotFound() {
-        this.dispatchEvent(new CustomEvent('404', {bubbles: true, composed: true}));
+        this.dispatchEvent(new CustomEvent('404', { bubbles: true, composed: true }));
       }
     }
-
     window.customElements.define(BlogPostMediator.is, BlogPostMediator);
   </script>
 </dom-module>

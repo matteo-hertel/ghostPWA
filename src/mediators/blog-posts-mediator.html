@@ -1,7 +1,7 @@
+<link rel="import" href="./base-mediator.html">
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
 
 <dom-module id="blog-posts-mediator">
   <template>
@@ -12,12 +12,6 @@
     </style>
     <iron-meta key="config" value="{{config}}"></iron-meta>
     <iron-ajax id="postsRequest" handle-as="json" on-response="handleResponse" on-error="handleError"></iron-ajax>
-
-    <!--<app-route 
-      route="{{subroute}}" 
-      pattern="/:id" 
-      data="{{subrouteData}}">
-    </app-route>-->
     <slot></slot>
   </template>
 
@@ -26,57 +20,29 @@
      * @customElement
      * @polymer
      */
-    class BlogPostsMediator extends Polymer.Element {
+    class BlogPostsMediator extends BaseMediator {
       static get is() {
         return 'blog-posts-mediator';
       }
       static get properties() {
         return {
-          posts: {
-            type: Array,
-            observer: "_reflectOnChildren"
-          },
-          // subroute: {
-          //   type: Object
-          // },
-          // subrouteData: {
-          //   type: Object,
-          //   observer: "_observeData"
-          // },
-          config: {
+          config:{
             type: Object
           },
-          name: {
-            type: String
+          childrenProperty: {
+            type: String,
+            value: "posts",
           },
-          active: {
-            type: Boolean,
-            value: false,
-            observer: "_activationAction"
-          }
         };
-      }
-      connectedCallback() {
-        super.connectedCallback();
-
       }
       handleError(x, y, z) {
         console.log(x, y, z);
       }
       handleResponse(e, request) {
-        this.posts = e.detail.response.posts;
+        this.data = e.detail.response.posts;
       }
-      _reflectOnChildren(n, o) {
-        let children = [...this.children];
-        children.map((child) => {
-          child.posts = n;
-        })
-      }
-      // _observeData(n, o) {
-      //   console.log(n, o, this.active);
-      // }
-      _activationAction(n, o) {
-        if (n === false || this.posts) {
+      activateComponent() {
+        if (this.posts) {
           return;
         }
         this.$.postsRequest.url = this.config.getAPIUrl('posts');
