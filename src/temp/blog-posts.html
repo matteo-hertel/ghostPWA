@@ -13,13 +13,18 @@
                 margin: 5px;
             }
         </style>
-        <div class="container layout horizontal">
-            <dom-repeat items="[[posts]]">
-                <template>
-                    <blog-post-card class$="layout flex-[[gridSize]]" post="[[item]]"></blog-post-card>
-                </template>
-            </dom-repeat>
-        </div>
+        <dom-repeat items="[[gridPosts]]">
+            <template>
+                <div class="container layout horizontal">
+                    <dom-repeat items="[[item]]">
+                        <template>
+                            <blog-post-card class="flex-1" post="[[item]]"></blog-post-card>
+                        </template>
+                    </dom-repeat>
+                </div>
+            </template>
+
+        </dom-repeat>
     </template>
 
     <script>
@@ -34,16 +39,26 @@
             static get properties() {
                 return {
                     posts: {
-                        type: Array
+                        type: Array,
+                        value:[{}],
+                        observer: "_makeGrid"
                     },
-                    gridSize:{
+                    gridSize: {
                         type: Number,
-                        value: 2
+                        value: 3,
+                        observer: "_makeGrid"
+                    },
+                    gridPosts: {
+                        type: Array
                     }
                 };
             }
-            _format(data) {
-                return JSON.stringify(data, null, 4);
+            _makeGrid() {
+                let i, j, tmp = [];
+                for (i = 0, j = this.posts.length; i < j; i += this.gridSize) {
+                    tmp.push(this.posts.slice(i, i + this.gridSize));
+                }
+                this.set("gridPosts", tmp);
             }
         }
 

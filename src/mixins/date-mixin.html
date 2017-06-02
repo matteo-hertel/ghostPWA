@@ -1,0 +1,11 @@
+<script src="../../bower_components/moment/min/moment.min.js"></script>
+
+<script>
+  DateMixin = function(superClass) {
+    return class extends superClass {
+      formatDate(date){
+          return moment(date).format("DD/MM/YYYY")
+      }
+    }
+  }
+</script>

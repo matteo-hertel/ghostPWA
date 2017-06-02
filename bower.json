@@ -8,7 +8,9 @@
     "iron-ajax": "^2.0.2",
     "iron-pages": "^2.0.0",
     "app-route": "PolymerElements/app-route#^2.0.0",
-    "iron-flex-layout": "^2.0.0"
+    "iron-flex-layout": "^2.0.0",
+    "iron-image": "PolymerElements/iron-image#^2.1.1",
+    "moment": "^2.18.1"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",

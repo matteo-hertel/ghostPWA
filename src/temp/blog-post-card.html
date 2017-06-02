@@ -1,7 +1,11 @@
+<link rel="import" href="../mixins/date-mixin.html">
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html"> ">
+
 <dom-module id="blog-post-card">
     <template>
-        <style>
+        <style is="custom-style" include="iron-flex iron-flex-alignment iron-flex-factors">
              :host {
                 display: block;
             }
@@ -26,12 +30,39 @@
             .container {
                 padding: 2px 16px;
             }
+
+            iron-image {
+                height: 350px;
+                width: 100%;
+                background: lightgray;
+            }
+            .round {
+                height: 50px;
+                width: 50px;
+                border-radius: 50%;
+            }
+            .right-pad {
+                padding-right: 10px;
+            }
+            .nomargin{
+                margin: 0;
+            }
         </style>
         <div class="card" on-click="viewPost">
-            <img src="http://localhost:8112/[[post.image]]" alt="Avatar">
+            <iron-image sizing="cover" preload fade src="http://localhost:8112/[[post.image]]"></iron-image>
             <div class="container">
                 <h4><b>[[post.title]]</b></h4>
                 <p>[[summary]]</p>
+            </div>
+            <div class="container start layout horizontal">
+                <div class="right-pad">
+                    <iron-image class="round" sizing="cover" preload fade src="http://localhost:8112/[[post.author.image]]"></iron-image>
+
+                </div>
+                <div class="flex">
+                    <p class="nomargin">by [[post.author.name]]</p>
+                    <p class="nomargin">[[formatDate(post.published_at)]]</p>
+                </div>
             </div>
         </div>
     </template>
@@ -41,7 +72,7 @@
          * @customElement
          * @polymer
          */
-        class BlogPostCard extends Polymer.Element {
+        class BlogPostCard extends DateMixin(Polymer.Element) {
             static get is() {
                 return 'blog-post-card';
             }
@@ -57,6 +88,9 @@
                 };
             }
             _createSummary(n, o) {
+                if (!n.html) {
+                    return;
+                }
                 let div = document.createElement("div");
                 div.innerHTML = n.html;
                 let text = div.innerText;
