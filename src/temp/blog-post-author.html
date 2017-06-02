@@ -1,0 +1,72 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html"> ">
+<link rel="import" href="../mixins/text-mixin.html">
+
+<dom-module id="blog-post-author">
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment iron-flex-factors">
+             :host {
+                display: block;
+            }
+
+            iron-image {
+                height: 350px;
+                width: 100%;
+                background: lightgray;
+            }
+
+            .round {
+                height: 50px;
+                width: 50px;
+                border-radius: 50%;
+            }
+
+            .right-pad {
+                padding-right: 10px;
+            }
+
+            p {
+                margin: 0;
+            }
+        </style>
+        <div class="start layout horizontal">
+            <div class="right-pad">
+                <iron-image class="round" sizing="cover" preload fade src="http://localhost:8112/[[author.image]]">LOOOOOL</iron-image>
+            </div>
+            <div class="flex">
+                <p><b>[[author.name]]</b></p>
+                <dom-if if="[[showBio]]">
+                    <template>
+                        <p>[[crop(author.bio, 130)]]</p>
+                    </template>
+                </dom-if>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        /**
+         * @customElement
+         * @polymer
+         */
+        class BlogPostAuthor extends TextMixin(Polymer.Element) {
+            static get is() {
+                return 'blog-post-author';
+            }
+            static get properties() {
+                return {
+                    author: {
+                        type: Object
+                    },
+                    showBio: {
+                        type: Boolean,
+                        value: false
+                    }
+                };
+            }
+        }
+
+        window.customElements.define(BlogPostAuthor.is, BlogPostAuthor);
+    </script>
+</dom-module>

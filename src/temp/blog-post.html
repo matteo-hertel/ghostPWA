@@ -1,14 +1,54 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="./../temp/blog-post-author.html">
+<link rel="import" href="./../temp/blog-post-date.html">
 
 <dom-module id="blog-post">
     <template>
-        <style>
-             :host {
-                display: block;
+        <style is="custom-style" include="iron-flex iron-flex-alignment iron-flex-factors">
+            .post-container {
+                text-align: justify;
+                max-width: 800px;
+                margin: auto;
+            }
+
+            .title {
+                text-align: justify;
+                font-size: 50px;
+                margin: 0px;
+            }
+
+            .mt10 {
+                margin-top: 10px;
+            }
+
+            blog-post-date {
+                justify-content: flex-end;
+            }
+            blog-post-author{
+                padding-right: 55px;
+            }
+
+            iron-image {
+                min-height: 350px;
+                width: 100%;
+                background: lightgray;
             }
         </style>
-        This is your new amazing post
-        <div id="output"></div>
+        <div class="layout horizonthal center-center">
+            <iron-image sizing="cover" preload fade src="http://localhost:8112/[[post.image]]"></iron-image>
+            <div class="post-container">
+                <div class="layout horizontal">
+                    <h1 class="title">[[post.title]]</h1>
+                </div>
+                <div class="layout horizontal">
+                    <blog-post-author class="flex mt10" author="[[post.author]]" show-bio></blog-post-author>
+                    <blog-post-date class="mt10" post="[[post]]"></blog-post-date>
+                </div>
+                <div id="output"></div>
+            </div>
+        </div>
     </template>
 
     <script>
@@ -29,7 +69,7 @@
                 };
             }
             _injectPost(n, o) {
-                if(!n || !n.html){
+                if (!n || !n.html) {
                     return this.$.output.innerHTML = "";
                 }
                 this.$.output.innerHTML = n.html;

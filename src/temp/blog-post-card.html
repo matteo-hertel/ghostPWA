@@ -1,29 +1,14 @@
-<link rel="import" href="../mixins/date-mixin.html">
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-image/iron-image.html">
-<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html"> ">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../temp/blog-post-author.html">
+<link rel="import" href="../mixins/text-mixin.html">
 
 <dom-module id="blog-post-card">
     <template>
-        <style is="custom-style" include="iron-flex iron-flex-alignment iron-flex-factors">
+        <style>
              :host {
                 display: block;
-            }
-
-            .card {
-                /* Add shadows to create the "card" effect */
-                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-                transition: 0.3s;
-            }
-
-            .card img {
-                max-height: 350px;
-                width: 100%;
-            }
-            /* On mouse-over, add a deeper shadow */
-
-            .card:hover {
-                box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
             }
             /* Add some padding inside the card container */
 
@@ -31,40 +16,24 @@
                 padding: 2px 16px;
             }
 
+            paper-card {
+                width: 100%;
+            }
+
             iron-image {
                 height: 350px;
                 width: 100%;
                 background: lightgray;
             }
-            .round {
-                height: 50px;
-                width: 50px;
-                border-radius: 50%;
-            }
-            .right-pad {
-                padding-right: 10px;
-            }
-            .nomargin{
-                margin: 0;
-            }
         </style>
-        <div class="card" on-click="viewPost">
+        <paper-card on-click="viewPost">
             <iron-image sizing="cover" preload fade src="http://localhost:8112/[[post.image]]"></iron-image>
             <div class="container">
                 <h4><b>[[post.title]]</b></h4>
                 <p>[[summary]]</p>
             </div>
-            <div class="container start layout horizontal">
-                <div class="right-pad">
-                    <iron-image class="round" sizing="cover" preload fade src="http://localhost:8112/[[post.author.image]]"></iron-image>
-
-                </div>
-                <div class="flex">
-                    <p class="nomargin">by [[post.author.name]]</p>
-                    <p class="nomargin">[[formatDate(post.published_at)]]</p>
-                </div>
-            </div>
-        </div>
+            <blog-post-author class="container" post="[[post]]" author="[[post.author]]"></blog-post-author>
+        </paper-card>
     </template>
 
     <script>
@@ -72,7 +41,7 @@
          * @customElement
          * @polymer
          */
-        class BlogPostCard extends DateMixin(Polymer.Element) {
+        class BlogPostCard extends TextMixin(Polymer.Element) {
             static get is() {
                 return 'blog-post-card';
             }
@@ -91,13 +60,7 @@
                 if (!n.html) {
                     return;
                 }
-                let div = document.createElement("div");
-                div.innerHTML = n.html;
-                let text = div.innerText;
-                if (text.length < 300) {
-                    return this.set("summary", text);
-                }
-                this.set("summary", text.substring(0, 300) + ' ...');
+                this.set("summary", this.htmlSummary(n.html));
             }
             viewPost(slug) {
                 this.dispatchEvent(new CustomEvent('viewPost', {

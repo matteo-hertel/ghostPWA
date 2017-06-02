@@ -1,0 +1,60 @@
+<link rel="import" href="../mixins/date-mixin.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="blog-post-date">
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment iron-flex-factors">
+             :host {
+                display: block;
+            }
+
+            p {
+                margin: 0;
+            }
+        </style>
+        <dom-if if="[[richInfo]]">
+            <template>
+                <div>
+                    [[formatDate(post.published_at)]]
+                </div>
+            </template>
+        </dom-if>
+        <dom-if if="![[richInfo]]">
+            <template>
+                <div>
+                    <p>Published: [[formatDate(post.published_at)]]</p>
+                    <p>Updated: [[formatDate(post.updated_at)]]</p>
+                </div>
+            </template>
+        </dom-if>
+
+    </template>
+
+    <script>
+        /**
+         * @customElement
+         * @polymer
+         */
+        class BlogPostDate extends DateMixin(Polymer.Element) {
+            static get is() {
+                return 'blog-post-date';
+            }
+            static get properties() {
+                return {
+                    post: {
+                        type: Object
+                    },
+                    author: {
+                        type: Object
+                    },
+                    richInfo: {
+                        type: Boolean,
+                        value: false
+                    }
+                };
+            }
+        }
+
+        window.customElements.define(BlogPostDate.is, BlogPostDate);
+    </script>
+</dom-module>

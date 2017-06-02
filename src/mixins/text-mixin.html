@@ -1,0 +1,19 @@
+<script>
+  TextMixin = function (superClass) {
+    return class extends superClass {
+      htmlSummary(html, limit = 300) {
+        let div = document.createElement("div");
+        div.innerHTML = html;
+        let text = div.innerText;
+        return this.crop(text, limit);
+      }
+      crop(text, limit = 150, end = "...") {
+        if (!text || text.length <= limit) {
+          return text
+        }
+        return text.substring(0, limit) + end;
+      }
+    }
+  }
+
+</script>
