@@ -52,15 +52,15 @@
         this.data = e.detail.response.posts[0];
       }
       activateComponent() {
-        if (this.post) {
-          return;
-        }
         if (!this.subrouteData.slug) {
           return this.postNotFound();
         }
         let path = `posts/slug/${this.subrouteData.slug}/`;
-        this.$.postRequest.url = this.config.getAPIUrl(path);
+        this.$.postRequest.url = this.config.getAPIUrl(path, [{ include: "author,tags" }]);
         this.$.postRequest.generateRequest();
+      }
+      deactivateComponent() {
+        this.set("data", {});
       }
       postNotFound() {
         this.dispatchEvent(new CustomEvent('404', { bubbles: true, composed: true }));

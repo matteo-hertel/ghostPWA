@@ -32,8 +32,12 @@
                     client_secret: "becb93feb204"
                 }
                 let dynamicConfig = {
-                    getAPIUrl: (path) => {
-                        return `${staticConfig.baseUrl}${path}?client_id=${staticConfig.client_id}&client_secret=${staticConfig.client_secret}`;
+                    getAPIUrl: (path, queryParams = []) => {
+                        let additionalParams = queryParams.reduce((acc, obj) => {
+                            Object.keys(obj).map((ey) => { acc += `&${ey}=${obj[ey]}` })
+                            return acc;
+                        }, "")
+                        return `${staticConfig.baseUrl}${path}?client_id=${staticConfig.client_id}&client_secret=${staticConfig.client_secret}${additionalParams}`;
                     }
                 }
                 return {

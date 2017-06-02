@@ -3,7 +3,6 @@
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../bower_components/app-route/app-location.html">
-<!--<link rel="import" href="../mediators/blog-posts-mediator.html">-->
 <link rel="import" href="../mediators/blog-posts-mediator.html">
 <link rel="import" href="../temp/blog-posts.html">
 <link rel="import" href="../mediators/blog-post-mediator.html">
@@ -73,6 +72,7 @@
       }
       addEventListeners() {
         this.addEventListener('404', e => this.changeRoute("not-found"));
+        this.addEventListener('viewPost', e => this.changeRoute(`post/${e.detail.slug}`));
       }
       changeRoute(route) {
         window.history.pushState({}, null, `/${route}`);

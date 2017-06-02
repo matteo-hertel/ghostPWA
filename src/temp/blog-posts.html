@@ -1,14 +1,25 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html"> ">
+<link rel="import" href="./../temp/blog-post-card.html">
 <dom-module id="blog-posts">
     <template>
-        <style>
+        <style is="custom-style" include="iron-flex iron-flex-alignment iron-flex-factors">
              :host {
                 display: block;
             }
+
+            blog-post-card {
+                padding: 10px;
+                margin: 5px;
+            }
         </style>
-        LOOOOOL
-        <pre>{{_format(posts)}}</pre>
+        <div class="container layout horizontal">
+            <dom-repeat items="[[posts]]">
+                <template>
+                    <blog-post-card class$="layout flex-[[gridSize]]" post="[[item]]"></blog-post-card>
+                </template>
+            </dom-repeat>
+        </div>
     </template>
 
     <script>
@@ -24,6 +35,10 @@
                 return {
                     posts: {
                         type: Array
+                    },
+                    gridSize:{
+                        type: Number,
+                        value: 2
                     }
                 };
             }

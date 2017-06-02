@@ -29,6 +29,9 @@
                 };
             }
             _injectPost(n, o) {
+                if(!n || !n.html){
+                    return this.$.output.innerHTML = "";
+                }
                 this.$.output.innerHTML = n.html;
             }
         }

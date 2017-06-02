@@ -1,0 +1,79 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<dom-module id="blog-post-card">
+    <template>
+        <style>
+             :host {
+                display: block;
+            }
+
+            .card {
+                /* Add shadows to create the "card" effect */
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                transition: 0.3s;
+            }
+
+            .card img {
+                max-height: 350px;
+                width: 100%;
+            }
+            /* On mouse-over, add a deeper shadow */
+
+            .card:hover {
+                box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+            }
+            /* Add some padding inside the card container */
+
+            .container {
+                padding: 2px 16px;
+            }
+        </style>
+        <div class="card" on-click="viewPost">
+            <img src="http://localhost:8112/[[post.image]]" alt="Avatar">
+            <div class="container">
+                <h4><b>[[post.title]]</b></h4>
+                <p>[[summary]]</p>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        /**
+         * @customElement
+         * @polymer
+         */
+        class BlogPostCard extends Polymer.Element {
+            static get is() {
+                return 'blog-post-card';
+            }
+            static get properties() {
+                return {
+                    post: {
+                        type: Object,
+                        observer: "_createSummary"
+                    },
+                    summary: {
+                        type: String
+                    }
+                };
+            }
+            _createSummary(n, o) {
+                let div = document.createElement("div");
+                div.innerHTML = n.html;
+                let text = div.innerText;
+                if (text.length < 300) {
+                    return this.set("summary", text);
+                }
+                this.set("summary", text.substring(0, 300) + ' ...');
+            }
+            viewPost(slug) {
+                this.dispatchEvent(new CustomEvent('viewPost', {
+                    detail: { slug: this.post.slug },
+                    bubbles: true,
+                    composed: true
+                }));
+            }
+        }
+
+        window.customElements.define(BlogPostCard.is, BlogPostCard);
+    </script>
+</dom-module>

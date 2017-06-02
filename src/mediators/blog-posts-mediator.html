@@ -42,10 +42,10 @@
         this.data = e.detail.response.posts;
       }
       activateComponent() {
-        if (this.posts) {
+        if (this.data) {
           return;
         }
-        this.$.postsRequest.url = this.config.getAPIUrl('posts');
+        this.$.postsRequest.url = this.config.getAPIUrl('posts', [{ include: "author,tags" }]);
         this.$.postsRequest.generateRequest();
       }
     }
