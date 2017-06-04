@@ -12,19 +12,54 @@
                 padding: 10px;
                 margin: 5px;
             }
-        </style>
-        <dom-repeat items="[[gridPosts]]">
-            <template>
-                <div class="container layout horizontal">
-                    <dom-repeat items="[[item]]">
-                        <template>
-                            <blog-post-card class="flex-1" post="[[item]]"></blog-post-card>
-                        </template>
-                    </dom-repeat>
-                </div>
-            </template>
 
-        </dom-repeat>
+            .container {
+                display: flex;
+                flex-flow: row wrap;
+                position: relative;
+                flex-wrap: wrap;
+            }
+
+            .grid-1 {
+                flex: 1 calc(100% - 30px);
+            }
+
+            .grid-2 {
+                flex: 1 calc(50% - 30px);
+            }
+
+            .grid-3 {
+                flex: 1 calc(33% - 30px);
+            }
+
+            .grid-4 {
+                flex: 1 calc(25% - 30px);
+            }
+
+            @media (max-width: 768px){
+                .grid-1,
+                .grid-2,
+                .grid-3,
+                .grid-4 {
+                    flex: 1 calc(100%);
+                }
+            }
+
+            @media (min-width: 769px) and (max-width: 1024px) {
+                .grid-3,
+                .grid-4 {
+                    flex: 1 calc(50% - 30px);
+                }
+            }
+        </style>
+
+        <div class="container layout horizontal">
+            <dom-repeat items="[[posts]]">
+                <template>
+                    <blog-post-card class$="grid-[[gridSize]]" post="[[item]]"></blog-post-card>
+                </template>
+            </dom-repeat>
+        </div>
     </template>
 
     <script>
@@ -40,25 +75,13 @@
                 return {
                     posts: {
                         type: Array,
-                        value:[{}],
-                        observer: "_makeGrid"
+                        value: [{}]
                     },
                     gridSize: {
                         type: Number,
-                        value: 3,
-                        observer: "_makeGrid"
-                    },
-                    gridPosts: {
-                        type: Array
+                        value: 4
                     }
                 };
-            }
-            _makeGrid() {
-                let i, j, tmp = [];
-                for (i = 0, j = this.posts.length; i < j; i += this.gridSize) {
-                    tmp.push(this.posts.slice(i, i + this.gridSize));
-                }
-                this.set("gridPosts", tmp);
             }
         }
 

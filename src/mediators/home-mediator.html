@@ -1,9 +1,9 @@
 <link rel="import" href="./base-mediator.html">
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 
-<dom-module id="blog-posts-mediator">
+<dom-module id="home-mediator">
   <template>
     <style>
        :host {
@@ -11,7 +11,8 @@
       }
     </style>
     <iron-meta key="config" value="{{config}}"></iron-meta>
-    <iron-ajax id="postsRequest" handle-as="json" on-response="handleResponse" on-error="handleError"></iron-ajax>
+    <iron-ajax id="homeRequest" handle-as="json" on-response="handleResponse" on-error="handleError"></iron-ajax>
+
     <slot></slot>
   </template>
 
@@ -20,36 +21,34 @@
      * @customElement
      * @polymer
      */
-    class BlogPostsMediator extends BaseMediator {
+    class HomeMediator extends BaseMediator {
       static get is() {
-        return 'blog-posts-mediator';
+        return 'home-mediator';
       }
       static get properties() {
         return {
-          config: {
-            type: Object
-          },
           childrenProperty: {
             type: String,
-            value: "posts",
+            value: "data",
           },
+          config: {
+            type: Object
+          }
         };
       }
       handleError(x, y, z) {
         console.log(x, y, z);
       }
       handleResponse(e, request) {
-        this.data = [...e.detail.response.posts, ...e.detail.response.posts, ...e.detail.response.posts];
+        console.log(e.detail.response);
+        this.data = e.detail.response;
       }
       activateComponent() {
-        if (this.data) {
-          return;
-        }
-        this.$.postsRequest.url = this.config.getAPIUrl('posts', [{ include: "author,tags" }]);
-        this.$.postsRequest.generateRequest();
+        this.$.homeRequest.url = this.config.getAPIUrl("settings/");
+        this.$.homeRequest.generateRequest();
       }
-    }
 
-    window.customElements.define(BlogPostsMediator.is, BlogPostsMediator);
+    }
+    window.customElements.define(HomeMediator.is, HomeMediator);
   </script>
 </dom-module>

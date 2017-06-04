@@ -13,11 +13,12 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../mediators/blog-posts-mediator.html">
-<link rel="import" href="../temp/blog-posts.html">
-<link rel="import" href="../mediators/blog-post-mediator.html">
-<link rel="import" href="../mediators/base-mediator.html">
 <link rel="import" href="../temp/blog-post.html">
+<link rel="import" href="../temp/blog-posts.html">
+<link rel="import" href="../temp/blog-homepage.html">
+<link rel="import" href="../mediators/blog-posts-mediator.html">
+<link rel="import" href="../mediators/blog-post-mediator.html">
+<link rel="import" href="../mediators/home-mediator.html">
 <dom-module id="blog-app">
   <template>
     <style>
@@ -62,10 +63,12 @@
           background-color: #ffffff;
         }
       }
-      paper-item a{
+
+      paper-item a {
         text-decoration: none;
         color: black
       }
+
       iron-pages {
         margin-top: 60px;
       }
@@ -100,12 +103,11 @@
     </app-drawer>
 
     <iron-pages id="pages" attr-for-selected="name" selected=[[selectedRoute]] selected-attribute="active" fallback-selection="404">
-      <base-mediator name="home">
-        <div>Homepage
-        </div>
-      </base-mediator>
+      <blog-posts-mediator name="home" subroute=[[tail]]>
+        <blog-homepage></blog-homepage>
+      </blog-posts-mediator>
       <blog-posts-mediator name="posts" subroute=[[tail]]>
-        <blog-posts grid-size="2"></blog-posts>
+        <blog-posts grid-seiz="3"></blog-posts>
       </blog-posts-mediator>
 
       <blog-post-mediator name="post" subroute=[[tail]]>

@@ -1,0 +1,84 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="./../temp/blog-posts.html">
+
+<dom-module id="blog-homepage">
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment iron-flex-factors">
+            iron-image {
+                min-height: 350px;
+                width: 100%;
+                background: lightgray;
+            }
+
+            .image-container {
+                position: relative;
+                width: 100%;
+                /* for IE 6 */
+                margin-bottom: -6px;
+            }
+
+            h2.title {
+                position: absolute;
+                top: 200px;
+                left: 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            h2.title span {
+                color: white;
+                font: bold 24px/45px;
+                letter-spacing: -1px;
+                background: rgb(0, 0, 0);
+                /* fallback color */
+                background: rgba(0, 0, 0, 0.7);
+                padding: 10px;
+            }
+
+            .ml20 {
+                margin-left: 20px;
+            }
+            h4{
+                margin: 10px 0 0 0;
+            }
+        </style>
+        <div class="layout vertical">
+            <div class="image-container">
+                <iron-image sizing="cover" preload fade src="http://localhost:8112/content/images/2017/06/samuel-zeller-1605.jpg"></iron-image>
+                <h2 class="title"><span>A song of Development and Life</span></h2>
+            </div>
+            <div class="ml20">
+                <h4>Features posts</h4>
+            </div>
+            <blog-posts grid-size="3" posts="[[posts]]"></blog-posts>
+            <div class="ml20">
+                <h4>Latest posts</h4>
+            </div>
+            <blog-posts grid-size="3" posts="[[posts]]"></blog-posts>
+
+        </div>
+    </template>
+
+    <script>
+        /**
+         * @customElement
+         * @polymer
+         */
+        class BlogHomepage extends Polymer.Element {
+            static get is() {
+                return 'blog-homepage';
+            }
+            static get properties() {
+                return {
+                    posts: {
+                        type: Object
+                    }
+                };
+            }
+        }
+
+        window.customElements.define(BlogHomepage.is, BlogHomepage);
+    </script>
+</dom-module>
