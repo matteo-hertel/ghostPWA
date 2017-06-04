@@ -16,9 +16,9 @@
 <link rel="import" href="../temp/blog-post.html">
 <link rel="import" href="../temp/blog-posts.html">
 <link rel="import" href="../temp/blog-homepage.html">
+<link rel="import" href="../mediators/broadcaster-mediator.html">
 <link rel="import" href="../mediators/blog-posts-mediator.html">
 <link rel="import" href="../mediators/blog-post-mediator.html">
-<link rel="import" href="../mediators/home-mediator.html">
 <dom-module id="blog-app">
   <template>
     <style>
@@ -103,9 +103,11 @@
     </app-drawer>
 
     <iron-pages id="pages" attr-for-selected="name" selected=[[selectedRoute]] selected-attribute="active" fallback-selection="404">
-      <blog-posts-mediator name="home" subroute=[[tail]]>
+      <broadcaster-mediator name="home" target="blog-homepage">
+        <blog-posts-mediator children-property="featuredPosts" featured></blog-posts-mediator>
+        <blog-posts-mediator></blog-posts-mediator>
         <blog-homepage></blog-homepage>
-      </blog-posts-mediator>
+      </broadcaster-mediator>
       <blog-posts-mediator name="posts" subroute=[[tail]]>
         <blog-posts grid-seiz="3"></blog-posts>
       </blog-posts-mediator>

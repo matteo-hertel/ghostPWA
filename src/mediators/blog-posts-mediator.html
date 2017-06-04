@@ -33,19 +33,28 @@
             type: String,
             value: "posts",
           },
+          featured: {
+            type: Boolean,
+            value: false
+          }
         };
       }
       handleError(x, y, z) {
         console.log(x, y, z);
       }
       handleResponse(e, request) {
-        this.data = [...e.detail.response.posts, ...e.detail.response.posts, ...e.detail.response.posts];
+        // this.data = [...e.detail.response.posts, ...e.detail.response.posts, ...e.detail.response.posts];
+        this.data = e.detail.response.posts;
       }
       activateComponent() {
         if (this.data) {
           return;
         }
-        this.$.postsRequest.url = this.config.getAPIUrl('posts', [{ include: "author,tags" }]);
+        let queryParams = [{ include: "author,tags" }];
+        if (this.featured) {
+          queryParams.push({ filter: "featured:true" })
+        }
+        this.$.postsRequest.url = this.config.getAPIUrl('posts', queryParams);
         this.$.postsRequest.generateRequest();
       }
     }

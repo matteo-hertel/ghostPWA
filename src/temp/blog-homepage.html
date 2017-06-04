@@ -40,7 +40,8 @@
             .ml20 {
                 margin-left: 20px;
             }
-            h4{
+
+            h4 {
                 margin: 10px 0 0 0;
             }
         </style>
@@ -52,11 +53,11 @@
             <div class="ml20">
                 <h4>Features posts</h4>
             </div>
-            <blog-posts grid-size="3" posts="[[posts]]"></blog-posts>
+            <blog-posts grid-size="2" posts="[[featuredPosts]]"></blog-posts>
             <div class="ml20">
                 <h4>Latest posts</h4>
             </div>
-            <blog-posts grid-size="3" posts="[[posts]]"></blog-posts>
+            <blog-posts grid-size="4" posts="[[posts]]"></blog-posts>
 
         </div>
     </template>
@@ -73,6 +74,9 @@
             static get properties() {
                 return {
                     posts: {
+                        type: Object
+                    },
+                    featuredPosts: {
                         type: Object
                     }
                 };

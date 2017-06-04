@@ -1,0 +1,84 @@
+<link rel="import" href="./base-mediator.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="broadcaster-mediator">
+  <template>
+    <style>
+       :host {
+        display: block;
+      }
+    </style>
+    <slot></slot>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class BroadcasterMediator extends BaseMediator {
+      static get is() {
+        return 'broadcaster-mediator';
+      }
+      static get properties() {
+        return {
+          active: {
+            type: Boolean
+          },
+          data: {
+            type: Boolean,
+            value: this.active
+          },
+          config: {
+            type: Object
+          },
+          templateChildren: {
+            type: Array,
+            value: []
+          },
+          mediatorsChildren: {
+            type: Array,
+            value: []
+          }
+        };
+      }
+      ready() {
+        super.ready();
+        this.handleChildren();
+      }
+      handleChildren() {
+        let children = Array.from(this.children);
+        children.map(child => {
+          if (child instanceof BaseMediator) {
+            child.addEventListener("data-update", this.reflectDataOnChildren.bind(this));
+            this.mediatorsChildren.push(child);
+          } else {
+            this.templateChildren.push(child);
+          }
+        })
+      }
+      activateComponent() {
+        this.activateMediators();
+      }
+      deactivateComponent() {
+        this.deactivateMediators();
+      }
+      reflectDataOnChildren(e) {
+        this.templateChildren.map(child => {
+          child[e.detail.property] = e.detail.data;
+        });
+      }
+      activateMediators() {
+        this.mediatorsChildren.map((mediator) => {
+          mediator.active = true;
+        })
+      }
+      deactivateMediators() {
+        this.mediatorsChildren.map((mediator) => {
+          mediator.active = false;
+        })
+      }
+    }
+    window.customElements.define(BroadcasterMediator.is, BroadcasterMediator);
+  </script>
+</dom-module>
