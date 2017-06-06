@@ -27,7 +27,7 @@
       }
 
       app-toolbar {
-        background-color: #000000;
+        background-color: transparent;
         color: #fff;
       }
 
@@ -35,24 +35,14 @@
         --paper-icon-button-ink-color: white;
       }
 
-      paper-icon-button+[main-title] {
-        margin-left: 24px;
-      }
-
-      paper-progress {
-        display: block;
-        width: 100%;
-        --paper-progress-active-color: rgba(255, 255, 255, 0.5);
-        --paper-progress-container-color: transparent;
+      paper-icon-button[right] {
+        left: 95%;
       }
 
       app-header {
         z-index: 9;
         @apply --layout-fixed-top;
         color: #fff;
-        --app-header-background-rear-layer: {
-          background-color: #ef6c00;
-        }
         ;
       }
 
@@ -64,29 +54,39 @@
         }
       }
 
-      paper-item a {
-        text-decoration: none;
-        color: black
+      paper-item {
+        justify-content: center
       }
 
-      iron-pages {
-        margin-top: 60px;
+      paper-item a {
+        text-decoration: none;
+        color: black;
+      }
+
+      .logo {
+        width: 100%;
+        height: 180px;
+        background: url(http://localhost:8112/content/images/2017/06/logoFull.svg);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        margin: 10px 0 15px 0;
       }
     </style>
     <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="/:page" data="{{data}}" tail="{{tail}}">
     </app-route>
 
-    <app-header reveals fixed condenses effects="waterfall">
+    <app-header reveals fixed condenses>
       <app-toolbar>
-        <paper-icon-button icon="menu" on-tap="toggleDrawer"></paper-icon-button>
-        <paper-button main-title>Ghost Blog!</paper-button>
-        <paper-icon-button icon="back"></paper-icon-button>
+        <paper-icon-button icon="menu" on-tap="toggleDrawer" title="Menu"></paper-icon-button>
+        <paper-icon-button icon="icons:arrow-back" on-tap="goBack" right title="Go Back"></paper-icon-button>
       </app-toolbar>
     </app-header>
     <app-drawer id="drawer" slot="drawer" swipe-open>
 
       <!-- nav menu -->
+      <div class='app-header__section app-header__section__center logo' on-tap="goHome"></div>
       <paper-listbox selected="[[selectedRoute]]" attr-for-selected="name" on-iron-activate="toggleDrawer">
         <paper-item name="home">
           <a href="/">Home</a>
@@ -162,6 +162,9 @@
       }
       goHome() {
         changeRoute()
+      }
+      goBack() {
+        window.history.back();
       }
       _computeSelectedRoute(data) {
         if (!data.page) {
