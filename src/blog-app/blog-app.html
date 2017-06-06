@@ -13,6 +13,7 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="./../config/blog-config.html">
 <link rel="import" href="../temp/blog-post.html">
 <link rel="import" href="../temp/blog-posts.html">
 <link rel="import" href="../temp/blog-homepage.html">
@@ -73,6 +74,7 @@
         margin: 10px 0 15px 0;
       }
     </style>
+    <blog-config></blog-config>
     <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="/:page" data="{{data}}" tail="{{tail}}">
     </app-route>
@@ -151,6 +153,18 @@
       ready() {
         super.ready();
         this.addEventListeners();
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/service-worker.js');
+          if (navigator.serviceWorker.controller) {
+            navigator.serviceWorker.controller.addEventListener('statechange',
+              function (event) {
+                if (event.target.state === 'redundant') {
+                  // this.$.newVersion.open();
+                  console.log("redundant");
+                }
+              }.bind(this), false);
+          }
+        }
       }
       addEventListeners() {
         this.addEventListener('404', e => this.changeRoute("not-found"));
