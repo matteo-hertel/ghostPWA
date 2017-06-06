@@ -1,7 +1,10 @@
 {
-  "lint": {
-    "rules": [
-      "polymer-2"
-    ]
-  }
+  "entrypoint": "index.html",
+  "shell": "src/blog-app/blog-app.html",
+  "fragments": [
+  ],
+  "sources": [
+    "manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-loader.js"
+  ]
 }

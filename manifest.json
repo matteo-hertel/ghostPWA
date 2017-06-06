@@ -1,7 +1,25 @@
 {
-  "name": "blog-app",
-  "short_name": "blog-app",
-  "description": "A SPA/PWA for ghost",
+  "name": "ghostPWA",
+  "short_name": "ghostPWA",
+  "icons": [{
+      "src": "http://localhost:8112/content/images/2017/06/logoFull.svg",
+      "sizes": "128x128",
+      "type": "image/png"
+    }, {
+      "src": "http://localhost:8112/content/images/2017/06/logoFull.svg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },{
+      "src": "http://localhost:8112/content/images/2017/06/logoFull.svg",
+      "sizes": "384x384",
+      "type": "image/png"
+    },{
+      "src": "http://localhost:8112/content/images/2017/06/logoFull.svg",
+      "sizes": "512x512",
+      "type": "image/png"
+    }],
   "start_url": "/",
-  "display": "standalone"
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "theme_color": "#000000"
 }
