@@ -1,6 +1,6 @@
 # \<blog-app\>
 
-A SPA/PWA for ghost
+A SPA/PWA for ghost build in polymer (I'll call it PPWA Polymer Progressive Web App)
 
 ## Install the Polymer-CLI
 
