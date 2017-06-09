@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-  <meta name="theme-color" content="#000000" >
+  <meta name="theme-color" content="#000000">
   <title>blog-app</title>
   <meta name="description" content="A SPA/PWA for ghost">
 
@@ -42,6 +42,20 @@
 
 <body>
   <blog-app></blog-app>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js');
+      if (navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.addEventListener('statechange',
+          function (event) {
+            if (event.target.state === 'redundant') {
+              // this.$.newVersion.open();
+              console.log("redundant");
+            }
+          }.bind(this), false);
+      }
+    }
+  </script>
 </body>
 
 </html>

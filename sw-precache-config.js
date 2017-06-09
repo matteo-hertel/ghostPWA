@@ -1,26 +1,34 @@
 module.exports = {
   staticFileGlobs: [
-    '/index.html',
-    '/favicon.ico',
-    '/manifest.json',
-    '/bower_components/webcomponentsjs/webcomponents-lite.js',
-    '/images/*',
-    '/fonts/*'
+    "/index.html",
+    "/favicon.ico",
+    "/manifest.json",
+    "/bower_components/webcomponentsjs/webcomponents-lite.js",
+    "/images/*",
+    "/fonts/*"
   ],
+  skipWaiting: true,
+  clientsClaim: true,
+  handleFetch: true,
   templateFilePath: "./custom-service-worker.tmpl",
-  navigateFallback: '/index.html',
+  navigateFallback: "/index.html",
   navigateFallbackWhitelist: [/^(?!.*\.html$|\/data\/|\/fonts\/|\/images\/).*/],
-  "runtimeCaching": [{
-      "urlPattern": /(\/data\/|\/fonts\/|\/images\/|\/src\/|\/bower_components\/)/,
-      "handler": "networkFirst"
+  runtimeCaching: [
+    {
+      urlPattern: /(\/data\/|\/fonts\/|\/images\/|\/src\/|\/bower_components\/)/,
+      handler: "fastest"
     },
     {
-      "urlPattern": /.*\.html/,
-      "handler": "networkFirst"
+      urlPattern: /.*\.html/,
+      handler: "fastest"
     },
     {
-      "urlPattern": /ghost\/api\/*/,
-      "handler": "networkFirs"
+      urlPattern: /api/,
+      handler: "networkFirst"
+    },
+    {
+      urlPattern: /\//,
+      handler: "networkFirst"
     }
   ]
 };

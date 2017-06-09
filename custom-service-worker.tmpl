@@ -69,15 +69,10 @@ function setOfCachedUrls(cache) {
   });
 }
 
-self.addEventListener('statechange', function(event) {
-  console.log(event)
-})
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(cacheName).then(function(cache) {
-      console.log(cache)
       return setOfCachedUrls(cache).then(function(cachedUrls) {
-        console.log(cachedUrls)
         return Promise.all(
           Array.from(urlsToCacheKeys.values()).map(function(cacheKey) {
             // If we don't have a key matching url in the cache already, add it.
@@ -129,6 +124,7 @@ function deleteAllCaches() {
 }
 
 self.addEventListener('message', function(event) {
+  console.log(event)
   if (event.data.command === 'delete_all') {
     console.log('About to delete all caches...');
     deleteAllCaches().then(function() {
@@ -174,7 +170,6 @@ self.addEventListener('fetch', function(event) {
       url = new URL(navigateFallback, self.location).toString();
       shouldRespond = urlsToCacheKeys.has(url);
     }
-
     // If shouldRespond was set to true at any point, then call
     // event.respondWith(), using the appropriate cache key.
     if (shouldRespond) {
