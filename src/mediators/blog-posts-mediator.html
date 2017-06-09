@@ -54,7 +54,7 @@
         if (this.featured) {
           queryParams.push({ filter: "featured:true" })
         }
-        this.$.postsRequest.url = this.config.getAPIUrl('posts', queryParams);
+        this.$.postsRequest.url = this.config.getAPIUrl('posts/', queryParams);
         this.$.postsRequest.generateRequest();
       }
     }

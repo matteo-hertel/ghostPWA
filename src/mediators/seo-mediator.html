@@ -1,0 +1,48 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="seo-mediator">
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class SeoMediator extends Polymer.Element {
+      static get is() {
+        return 'seo-mediator';
+      }
+      static get properties() {
+        return {
+          seoType: {
+            type: String,
+            value: "page"
+          },
+          hasStructuredData: {
+            type: Boolean,
+            value: true
+          },
+          seoData: {
+            type: Object,
+            value: {
+              title: "My Awesome Blog"
+            }
+          }
+        };
+      }
+      broadcastSeoUpdates() {
+        this.dispatchEvent(new CustomEvent('seo-update', {
+          detail: {
+            seoType: this.seoType,
+            hasStructuredData: this.hasStructuredData,
+            seoData: this.seoData
+          },
+          bubbles: true,
+          composed: true
+        }));
+
+      }
+    }
+
+    window.customElements.define(SeoMediator.is, SeoMediator);
+  </script>
+</dom-module>

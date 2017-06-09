@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="./seo-mediator.html">
 <dom-module id="base-mediator">
 
   <script>
@@ -6,7 +7,7 @@
      * @customElement
      * @polymer
      */
-    class BaseMediator extends Polymer.Element {
+    class BaseMediator extends SeoMediator {
       static get is() {
         return 'base-mediator';
       }

@@ -154,10 +154,22 @@
       ready() {
         super.ready();
         this.addEventListeners();
+        this.handleServiceWorkers();
       }
       addEventListeners() {
         this.addEventListener('404', e => this.changeRoute("not-found"));
         this.addEventListener('viewPost', e => this.changeRoute(`post/${e.detail.slug}`));
+      }
+      handleServiceWorkers() {
+        if (navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.addEventListener('statechange',
+            (event) => {
+              if (event.target.state === 'redundant') {
+                // this.$.newVersion.open();
+                console.log("redundant");
+              }
+            });
+        }
       }
       changeRoute(route) {
         window.history.pushState({}, null, `/${route}`);

@@ -42,6 +42,11 @@
           },
           config: {
             type: Object
+          },
+          seoType: {
+            type: String,
+            value: "article",
+            readonly: true
           }
         };
       }
@@ -50,6 +55,7 @@
       }
       handleResponse(e, request) {
         this.data = e.detail.response.posts[0];
+        this.broadcastSeoUpdates();
       }
       activateComponent() {
         if (!this.subrouteData.slug) {

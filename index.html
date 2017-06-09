@@ -42,18 +42,10 @@
 
 <body>
   <blog-app></blog-app>
+  <script type="application/ld+json" id="structuredData"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js');
-      if (navigator.serviceWorker.controller) {
-        navigator.serviceWorker.controller.addEventListener('statechange',
-          function (event) {
-            if (event.target.state === 'redundant') {
-              // this.$.newVersion.open();
-              console.log("redundant");
-            }
-          }.bind(this), false);
-      }
     }
   </script>
 </body>
