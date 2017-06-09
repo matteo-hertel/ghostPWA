@@ -16,6 +16,7 @@
 <link rel="import" href="./../config/blog-config.html">
 <link rel="import" href="../temp/blog-post.html">
 <link rel="import" href="../temp/blog-posts.html">
+<link rel="import" href="../temp/blog-seo.html">
 <link rel="import" href="../temp/blog-homepage.html">
 <link rel="import" href="../mediators/broadcaster-mediator.html">
 <link rel="import" href="../mediators/blog-posts-mediator.html">
@@ -103,24 +104,24 @@
       </paper-listbox>
 
     </app-drawer>
+    <blog-seo>
+      <iron-pages id="pages" attr-for-selected="name" selected=[[selectedRoute]] selected-attribute="active" fallback-selection="404">
+        <broadcaster-mediator name="home" target="blog-homepage">
+          <blog-posts-mediator children-property="featuredPosts" featured></blog-posts-mediator>
+          <blog-posts-mediator></blog-posts-mediator>
+          <blog-homepage></blog-homepage>
+        </broadcaster-mediator>
+        <blog-posts-mediator name="posts" subroute=[[tail]]>
+          <blog-posts grid-seiz="3"></blog-posts>
+        </blog-posts-mediator>
 
-    <iron-pages id="pages" attr-for-selected="name" selected=[[selectedRoute]] selected-attribute="active" fallback-selection="404">
-      <broadcaster-mediator name="home" target="blog-homepage">
-        <blog-posts-mediator children-property="featuredPosts" featured></blog-posts-mediator>
-        <blog-posts-mediator></blog-posts-mediator>
-        <blog-homepage></blog-homepage>
-      </broadcaster-mediator>
-      <blog-posts-mediator name="posts" subroute=[[tail]]>
-        <blog-posts grid-seiz="3"></blog-posts>
-      </blog-posts-mediator>
+        <blog-post-mediator name="post" subroute=[[tail]]>
+          <blog-post></blog-post>
+        </blog-post-mediator>
 
-      <blog-post-mediator name="post" subroute=[[tail]]>
-        <blog-post></blog-post>
-      </blog-post-mediator>
-
-      <div name="404">not found</div>
-    </iron-pages>
-
+        <div name="404">not found</div>
+      </iron-pages>
+    </blog-seo>
 
   </template>
 
@@ -153,18 +154,6 @@
       ready() {
         super.ready();
         this.addEventListeners();
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('/service-worker.js');
-          if (navigator.serviceWorker.controller) {
-            navigator.serviceWorker.controller.addEventListener('statechange',
-              function (event) {
-                if (event.target.state === 'redundant') {
-                  // this.$.newVersion.open();
-                  console.log("redundant");
-                }
-              }.bind(this), false);
-          }
-        }
       }
       addEventListeners() {
         this.addEventListener('404', e => this.changeRoute("not-found"));
