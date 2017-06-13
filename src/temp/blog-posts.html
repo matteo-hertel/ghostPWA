@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html"> ">
 <link rel="import" href="./../temp/blog-post-card.html">
+<link rel="import" href="./../mediators/seo-mediator.html">
 <dom-module id="blog-posts">
     <template>
         <style is="custom-style" include="iron-flex iron-flex-alignment iron-flex-factors">
@@ -36,7 +37,7 @@
                 flex: 1 calc(25% - 30px);
             }
 
-            @media (max-width: 768px){
+            @media (max-width: 768px) {
                 .grid-1,
                 .grid-2,
                 .grid-3,
@@ -67,7 +68,7 @@
          * @customElement
          * @polymer
          */
-        class BlogPosts extends Polymer.Element {
+        class BlogPosts extends SeoMediator {
             static get is() {
                 return 'blog-posts';
             }
@@ -75,13 +76,27 @@
                 return {
                     posts: {
                         type: Array,
-                        value: []
+                        value: [],
+                        observer: "observeActivation"
                     },
                     gridSize: {
                         type: Number,
                         value: 4
                     }
                 };
+            }
+            observeActivation(n, o) {
+                if (n.length) {
+                    if (typeof this.broadcastSeoUpdates === "function") {
+                        this.broadcastSeoUpdates();
+                    }
+                }
+            }
+            ready() {
+                super.ready();
+                this.set("seoData", {
+                    title: "Posts list"
+                })
             }
         }
 

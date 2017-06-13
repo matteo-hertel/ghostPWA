@@ -1,0 +1,120 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="./../temp/blog-posts.html">
+<link rel="import" href="./../mediators/seo-mediator.html">
+
+<dom-module id="blog-404">
+    <template>
+        <style is="custom-style" include="iron-flex iron-flex-alignment iron-flex-factors">
+            iron-image {
+                min-height: 350px;
+                width: 100%;
+                background: lightgray;
+            }
+
+            .image-container {
+                position: relative;
+                width: 100%;
+                /* for IE 6 */
+                margin-bottom: -6px;
+            }
+
+            .center {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            @media (max-width: 768px) {
+                .grid-1,
+                .grid-2,
+                .grid-3,
+                .grid-4 {
+                    flex: 1 calc(100%);
+                }
+            }
+
+            @media (max-width: 425px) {
+                iron-image {
+                    min-height: 200px;
+                }
+            }
+
+            @media (min-width: 426px) and (max-width: 768px) {
+                iron-image {
+                    min-height: 340px;
+                }
+            }
+
+            @media (min-width: 769px) and (max-width: 1024px) {
+                iron-image {
+                    min-height: 420px;
+                }
+            }
+
+            @media (min-width: 1025px) and (max-width: 1550px) {
+                iron-image {
+                    min-height: 650px;
+                }
+            }
+
+            @media (min-width: 1551px) {
+                iron-image {
+                    min-height: 1120px;
+                }
+            }
+        </style>
+        <div class="layout vertical">
+            <div class="image-container">
+                <iron-image sizing="cover" preload fade src="http://localhost:8112/content/images/2017/06/404.jpg"></iron-image>
+            </div>
+            <div class="center">
+                <h2>Nothing to see here</h2>
+
+            </div>
+            <div class="center">
+                <p>The requested page does not exists</p>
+
+            </div>
+
+        </div>
+    </template>
+
+    <script>
+        /**
+         * @customElement
+         * @polymer
+         */
+        class Blog404 extends SeoMediator {
+            static get is() {
+                return 'blog-404';
+            }
+            static get properties() {
+                return {
+                    active: {
+                        type: Boolean,
+                        observer: "observeActivation"
+                    },
+
+                };
+            }
+            observeActivation(n, o) {
+                if (n) {
+                    if (typeof this.broadcastSeoUpdates === "function") {
+                        this.broadcastSeoUpdates();
+                    }
+                }
+            }
+            ready() {
+                super.ready();
+                this.set("seoData", {
+                    title: "404"
+                })
+            }
+
+        }
+
+        window.customElements.define(Blog404.is, Blog404);
+    </script>
+</dom-module>

@@ -18,6 +18,8 @@
 <link rel="import" href="../temp/blog-posts.html">
 <link rel="import" href="../temp/blog-seo.html">
 <link rel="import" href="../temp/blog-homepage.html">
+<link rel="import" href="../temp/blog-404.html">
+<link rel="import" href="../mediators/base-mediator.html">
 <link rel="import" href="../mediators/broadcaster-mediator.html">
 <link rel="import" href="../mediators/blog-posts-mediator.html">
 <link rel="import" href="../mediators/blog-post-mediator.html">
@@ -118,8 +120,9 @@
         <blog-post-mediator name="post" subroute=[[tail]]>
           <blog-post></blog-post>
         </blog-post-mediator>
-
-        <div name="404">not found</div>
+        <base-mediator name="404">
+          <blog-404></blog-404>
+        </base-mediator>
       </iron-pages>
     </blog-seo>
 
