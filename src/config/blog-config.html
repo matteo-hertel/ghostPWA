@@ -22,9 +22,16 @@
             }
             static get properties() {
                 let staticConfig = {
-                    baseUrl: `http://f439859d.ngrok.io/ghost/api/v0.1/`,
+                    baseUrl: `http://localhost:8112/ghost/api/v0.1/`,
                     client_id: "ghost-frontend",
-                    client_secret: "becb93feb204"
+                    client_secret: "becb93feb204",
+                    blog_title: "A song of Bugs and Features",
+                    blog_url: `${window.location.href}${window.location.port ? `:${window.location.port}` : ""}`,
+                    cdn_url: "https://cdn.matteohertel.com",
+                    seoDefaults: {
+                        title: "A song of Bugs and Features",
+                        meta_description: "A journal of my (dis)adventures in the world of software development."
+                    }
                 }
                 let dynamicConfig = {
                     getAPIUrl: (path, queryParams = []) => {

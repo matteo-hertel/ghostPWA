@@ -24,10 +24,17 @@
             type: Boolean,
             value: false,
             observer: "_activationAction"
+          },
+          preventReflection: {
+            type: Boolean,
+            value: false,
           }
         };
       }
       _reflectOnChildren(n, o) {
+        if (this.preventReflection) {
+          return;
+        }
         let children = [...this.children];
         children.map((child) => {
           child[this.childrenProperty] = n;

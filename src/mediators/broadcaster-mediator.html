@@ -59,9 +59,11 @@
       }
       activateComponent() {
         this.activateMediators();
+        this.activateChildren();
       }
       deactivateComponent() {
         this.deactivateMediators();
+        this.deactivateChildren();
       }
       reflectDataOnChildren(e) {
         this.templateChildren.map(child => {
@@ -75,6 +77,16 @@
       }
       deactivateMediators() {
         this.mediatorsChildren.map((mediator) => {
+          mediator.active = false;
+        })
+      }
+      activateChildren() {
+        this.templateChildren.map((mediator) => {
+          mediator.active = true;
+        })
+      }
+      deactivateChildren() {
+        this.templateChildren.map((mediator) => {
           mediator.active = false;
         })
       }

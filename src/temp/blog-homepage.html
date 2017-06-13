@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="./../temp/blog-posts.html">
+<link rel="import" href="./../mediators/seo-mediator.html">
 
 <dom-module id="blog-homepage">
     <template>
@@ -67,7 +68,7 @@
          * @customElement
          * @polymer
          */
-        class BlogHomepage extends Polymer.Element {
+        class BlogHomepage extends SeoMediator {
             static get is() {
                 return 'blog-homepage';
             }
@@ -78,9 +79,20 @@
                     },
                     featuredPosts: {
                         type: Object
-                    }
+                    },
+                    active: {
+                        type: Boolean,
+                        observer: "observeActivation"
+                    },
+
                 };
             }
+            observeActivation(n, o) {
+                if (n) {
+                    this.broadcastSeoUpdates();
+                }
+            }
+
         }
 
         window.customElements.define(BlogHomepage.is, BlogHomepage);

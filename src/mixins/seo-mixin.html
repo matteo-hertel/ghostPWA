@@ -1,0 +1,95 @@
+<script src="../../bower_components/moment/min/moment.min.js"></script>
+
+<script>
+  SeoMixin = function (superClass) {
+    return class extends superClass {
+      makePageStructuredData(data) {
+        return "";
+      }
+      makeArticleStructuredData(data) {
+        return `
+                    {
+                    "@context": "http://schema.org",
+                    "@type": "NewsArticle",
+                    "mainEntityOfPage": {
+                        "@type": "WebPage",
+                        "@id": "${this.config.blog_url}/post/${data.slug}"
+                    },
+                    "headline": "Article headline",
+                    "image": {
+                        "@type": "ImageObject",
+                        "url": "${data.image_url}",
+                        "height": 1024,
+                        "width": 768
+                    },
+                    "datePublished": "${data.published_at}",
+                    "dateModified": "${data.updated_at}",
+                    "author": {
+                        "@type": "Person",
+                        "name": "${this.getOrDefault(data.author.name, "author")}"
+                    },
+                    "publisher": {
+                        "@type": "Organization",
+                        "name": "MHDevelopment",
+                        "logo": {
+                            "@type": "ImageObject",
+                            "url": "${this.config.cdn_url}/logo/60x60/logo.svg",
+                            "width": 60,
+                            "height": 60
+                        }
+                    },
+                    "description": "${this.getOrDefault(data.meta_description, "meta_description")}"
+                    }
+                `;
+      }
+      makePageStructuredData(data) {
+        return `
+                    {
+                      "@context": "http://schema.org",
+                      "@type": "WebPage",
+                      "name": "${this.getOrDefault((data.meta_title || data.title), "title")}",
+                      "description": "${this.getOrDefault(data.meta_description, "meta_description")}",
+                      "publisher": {
+                        "@type": "Organization",
+                        "name": "MHDevelopment",
+                        "logo": {
+                            "@type": "ImageObject",
+                            "url": "${this.config.cdn_url}/logo/60x60/logo.svg",
+                            "width": 60,
+                            "height": 60
+                        }
+                    }
+                  }
+                `;
+      }
+
+      makeArticleMetaTags(data) {
+
+        document.title = `${this.getOrDefault((data.meta_title || data.title), "title")} | ${this.config.blog_title}`;
+        document.description = `${this.getOrDefault(data.meta_description, "meta_description")}`;
+        this.setMetaTag('meta[name="description"]', "content", `${this.getOrDefault(data.meta_description, "meta_description")}`);
+
+      }
+      makePageMetaTags(data) {
+        document.title = `${this.getOrDefault((data.meta_title || data.title), "title")} | ${this.config.blog_title}`;
+
+        this.setMetaTag('meta[name="description"]', "content", `${this.getOrDefault(data.meta_description, "meta_description")}`);
+      }
+      getOrDefault(prop, name) {
+        if (prop) {
+          return prop;
+        }
+        if (this.config.seoDefaults[name]) {
+          return this.config.seoDefaults[name];
+        }
+        return "";
+      }
+
+      setMetaTag(selector, attribute, value) {
+        document.querySelector(selector).setAttribute(attribute, value);
+
+      }
+    }
+  }
+
+</script>

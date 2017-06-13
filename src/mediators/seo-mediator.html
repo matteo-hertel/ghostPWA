@@ -23,9 +23,7 @@
           },
           seoData: {
             type: Object,
-            value: {
-              title: "My Awesome Blog"
-            }
+            value: {}
           }
         };
       }
@@ -34,7 +32,7 @@
           detail: {
             seoType: this.seoType,
             hasStructuredData: this.hasStructuredData,
-            seoData: this.seoData
+            seoData: (this.data || this.seoData)
           },
           bubbles: true,
           composed: true
