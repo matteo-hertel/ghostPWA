@@ -55,7 +55,9 @@
       }
       handleResponse(e, request) {
         this.data = e.detail.response.posts[0];
-        this.broadcastSeoUpdates();
+        if (typeof this.broadcastSeoUpdates === "function") {
+          this.broadcastSeoUpdates();
+        }
       }
       activateComponent() {
         if (!this.subrouteData.slug) {

@@ -89,7 +89,9 @@
             }
             observeActivation(n, o) {
                 if (n) {
-                    this.broadcastSeoUpdates();
+                    if (typeof this.broadcastSeoUpdates === "function") {
+                        this.broadcastSeoUpdates();
+                    }
                 }
             }
 

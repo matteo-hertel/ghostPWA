@@ -46,6 +46,7 @@
             processStructuredData(type, data) {
                 switch (type) {
                     case "page":
+                        this.dataElement.innerHTML = this.makePageStructuredData(data);
                         break;
                     case "article":
                         this.dataElement.innerHTML = this.makeArticleStructuredData(data);
