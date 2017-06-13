@@ -24,10 +24,17 @@
           seoData: {
             type: Object,
             value: {}
+          },
+          preventSeo: {
+            type: Boolean,
+            value: false
           }
         };
       }
       broadcastSeoUpdates() {
+        if (this.preventSeo) {
+          return;
+        }
         this.dispatchEvent(new CustomEvent('seo-update', {
           detail: {
             seoType: this.seoType,
