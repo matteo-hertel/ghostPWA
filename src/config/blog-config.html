@@ -37,9 +37,9 @@
                 }
                 let dynamicConfig = {
                     getAPIUrl: (path, queryParams = []) => {
-                        let additionalParams = queryParams.reduce((acc, obj) => {
-                            Object.keys(obj).map((ey) => { acc += `&${ey}=${obj[ey]}` })
-                            return acc;
+                        let additionalParams = queryParams.reduce((accumulator, obj) => {
+                            Object.keys(obj).map((key) => { accumulator += `&${key}=${obj[key]}` })
+                            return accumulator;
                         }, "")
                         return `${staticConfig.baseUrl}${path}?client_id=${staticConfig.client_id}&client_secret=${staticConfig.client_secret}${additionalParams}`;
                     }
