@@ -54,9 +54,17 @@
         console.log(x, y, z);
       }
       handleResponse(e, request) {
-        this.data = e.detail.response.posts[0];
-        if (typeof this.broadcastSeoUpdates === "function") {
-          this.broadcastSeoUpdates();
+        try {
+          if (!e.detail.response || !e.detail.response.posts && !e.detail.response.posts.length) {
+            return;
+          }
+          this.data = e.detail.response.posts[0];
+          if (typeof this.broadcastSeoUpdates === "function") {
+            this.broadcastSeoUpdates();
+          }
+        } catch (exc) {
+          //better error handling
+          console.log(exc);
         }
       }
       activateComponent() {

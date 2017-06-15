@@ -4,7 +4,6 @@
 <dom-module id="blog-config">
     <template>
         <iron-meta key="config" value="[[config]]"></iron-meta>
-        <iron-meta key="lol" value="foo"></iron-meta>
     </template>
 
     <script>
@@ -22,19 +21,19 @@
             }
             static get properties() {
                 let staticConfig = {
-                    baseUrl: ``,
-                    client_id: "",
-                    client_secret: "",
-                    blog_title: "Ghost PWA",
+                    baseUrl: `http://localhost:8112/ghost/api/v0.1/`,
+                    client_id: "ghost-frontend",
+                    client_secret: "becb93feb204",
+                    blog_title: "A song of Bugs and Features",
                     blog_url: `${window.location.href}${window.location.port ? `:${window.location.port}` : ""}`,
-                    cdn_url: "",
+                    cdn_url: "https://cdn.matteohertel.com",
                     seoDefaults: {
-                        site_name: "",
-                        title: "",
-                        meta_description: "",
-                        publisher_handle: "",
-                        twitter_card: "",
-                        fb_admin: ""
+                        site_name: "A song of Bugs and Features",
+                        title: "A song of Bugs and Features",
+                        meta_description: "A journal of my (dis)adventures in the world of software development.",
+                        publisher_handle: "@MHDev91",
+                        twitter_card: "summary_large_image",
+                        fb_admin: "100001488865956"
                     }
                 }
                 let dynamicConfig = {

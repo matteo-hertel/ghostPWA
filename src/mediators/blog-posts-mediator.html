@@ -43,8 +43,15 @@
         console.log(x, y, z);
       }
       handleResponse(e, request) {
-        // this.data = [...e.detail.response.posts, ...e.detail.response.posts, ...e.detail.response.posts];
-        this.data = e.detail.response.posts;
+        try {
+          if (!e.detail.response || !e.detail.response.posts) {
+            return;
+          }
+          this.data = e.detail.response.posts;
+        } catch (exc) {
+          //better error handling
+          console.log(exc);
+        }
       }
       activateComponent() {
         if (this.data) {

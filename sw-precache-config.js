@@ -29,6 +29,10 @@ module.exports = {
     {
       urlPattern: /\//,
       handler: "networkFirst"
+    },
+    {
+      urlPattern: /https:\/\/fonts.googleapis.com\/*/,
+      handler: "fastest"
     }
   ]
 };

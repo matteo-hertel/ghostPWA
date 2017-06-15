@@ -59,53 +59,43 @@
                   }
                 `;
       }
-
-      makeArticleMetaTags(data) {
-
+      makeCommonMetaTags(data) {
         document.title = `${this.getOrDefault((data.meta_title || data.title), "title")} | ${this.config.blog_title}`;
         this.setMetaTag('meta[name="description"]', "content", this.getOrDefault(data.meta_description, "meta_description"));
+        // Schema.org markup for Google+ 
+        this.setMetaTag('meta[itemprop="name"]', "content", this.getOrDefault((data.meta_title || data.title), "title"));
+        this.setMetaTag('meta[itemprop="description"]', "content", this.getOrDefault(data.meta_description, "meta_description"));
+        this.setMetaTag('meta[itemprop="image"]', "content", this.getOrDefault(data.image, "image"));
+        // end Schema.org markup for Google+ 
 
+        //Twitter Card data
+        this.setMetaTag('meta[name="twitter:card"]', "content", this.getOrDefault(data.twitter_card, "twitter_card"));
+        this.setMetaTag('meta[name="twitter:site"]', "content", this.getOrDefault(data.publisher_handle, "publisher_handle"));
+        this.setMetaTag('meta[name="twitter:title"]', "content", this.getOrDefault((data.meta_title || data.title), "title"));
+        this.setMetaTag('meta[name="twitter:description"]', "content", this.getOrDefault(data.meta_description, "meta_description"));
+        this.setMetaTag('meta[name="twitter:creator"]', "content", this.getOrDefault(data.publisher_handle, "publisher_handle"));
+        this.setMetaTag('meta[name="twitter:image:src"]', "content", this.getOrDefault(data.image, "image"));
+        // end Twitter Card data
 
-        this.setMetaTag('itemprop="name"', "content", this.getOrDefault((data.meta_title || data.title), "title"));
-        this.setMetaTag('itemprop="description"', "content", this.getOrDefault(data.meta_description, "meta_description"));
-        this.setMetaTag('itemprop="image"', "content", this.getOrDefault(data.meta_description, "meta_description"));
-        this.setMetaTag('name="twitter:card"', "content", this.getOrDefault(data.twitter_card, "twitter_card"));
-        this.setMetaTag('name="twitter:site"', "content", this.getOrDefault(data.publisher_handle, "publisher_handle"));
-        this.setMetaTag('name="twitter:title"', "content", this.getOrDefault((data.meta_title || data.title), "title"));
-        this.setMetaTag('name="twitter:description"', "content", this.getOrDefault());
-        this.setMetaTag('name="twitter:creator"', "content", this.getOrDefault());
-        this.setMetaTag('name="twitter:image:src"', "content", this.getOrDefault(data.meta_description, "meta_description"));
-        this.setMetaTag('property="og:title"', "content", this.getOrDefault((data.meta_title || data.title), "title"));
-        this.setMetaTag('property="og:type"', "content", this.getOrDefault());
-        this.setMetaTag('property="og:url"', "content", this.getOrDefault());
-        this.setMetaTag('property="og:image"', "content", this.getOrDefault(data.meta_description, "meta_description"));
-        this.setMetaTag('property="og:description"', "content", this.getOrDefault());
-        this.setMetaTag('property="og:site_name"', "content", this.getOrDefault());
-        this.setMetaTag('property="article:published_time"', "content", this.getOrDefault());
-        this.setMetaTag('property="article:modified_time"', "content", this.getOrDefault(data.meta_description, "meta_description"));
-        this.setMetaTag('property="article:tag"', "content", this.getOrDefault());
-        this.setMetaTag('property="fb:admins"', "content", this.getOrDefault());
+        //Open Graph data
+        this.setMetaTag('meta[property="og:title"]', "content", this.getOrDefault((data.meta_title || data.title), "title"));
+        this.setMetaTag('meta[property="og:type"]', "content", this.getOrDefault("article"));
+        this.setMetaTag('meta[property="og:url"]', "content", this.getOrDefault(window.location.href));
+        this.setMetaTag('meta[property="og:image"]', "content", this.getOrDefault(data.meta_description, "image"));
+        this.setMetaTag('meta[property="og:description"]', "content", this.getOrDefault(data.meta_description, "meta_description"));
+        this.setMetaTag('meta[property="og:site_name"]', "content", this.getOrDefault(data.site_name, "site_name"));
+        //end Open Graph data
+      }
+      makeArticleMetaTags(data) {
+        this.makeCommonMetaTags(data);
+        this.setMetaTag('meta[property="article:published_time"]', "content", this.getOrDefault(data.published_at, "none"));
+        this.setMetaTag('meta[property="article:modified_time"]', "content", this.getOrDefault(data.updated_at, "none"));
+        this.setMetaTag('meta[property="article:tag"]', "content", this.getOrDefault(window.location.href));
+        this.setMetaTag('meta[property="fb:admins"]', "content", this.getOrDefault("", "fb_admin"));
 
       }
       makePageMetaTags(data) {
-        document.title = `${this.getOrDefault((data.meta_title || data.title), "title")} | ${this.config.blog_title}`;
-        this.setMetaTag('meta[name="description"]', "content", this.getOrDefault(data.meta_description, "meta_description"));
-        this.setMetaTag('itemprop="name"', "content", this.getOrDefault((data.meta_title || data.title), "title"));
-        this.setMetaTag('itemprop="description"', "content", this.getOrDefault(data.meta_description, "meta_description"));
-        this.setMetaTag('itemprop="image"', "content", this.getOrDefault(data.meta_description, "meta_description"));
-        this.setMetaTag('name="twitter:card"', "content", this.getOrDefault(data.twitter_card, "twitter_card"));
-        this.setMetaTag('name="twitter:site"', "content", this.getOrDefault(data.publisher_handle, "publisher_handle"));
-        this.setMetaTag('name="twitter:title"', "content", this.getOrDefault((data.meta_title || data.title), "title"));
-        this.setMetaTag('name="twitter:description"', "content", this.getOrDefault(data.meta_description, "meta_description"));
-        this.setMetaTag('name="twitter:creator"', "content", this.getOrDefault());
-        this.setMetaTag('name="twitter:image:src"', "content", this.getOrDefault(data.meta_description, "meta_description"));
-        this.setMetaTag('property="og:title"', "content", this.getOrDefault((data.meta_title || data.title), "title"));
-        this.setMetaTag('property="og:type"', "content", this.getOrDefault());
-        this.setMetaTag('property="og:url"', "content", this.getOrDefault());
-        this.setMetaTag('property="og:image"', "content", this.getOrDefault(data.meta_description, "meta_description"));
-        this.setMetaTag('property="og:description"', "content", this.getOrDefault(data.meta_description, "meta_description"));
-        this.setMetaTag('property="og:site_name"', "content", this.getOrDefault());
-        this.setMetaTag('property="fb:admins"', "content", this.getOrDefault());
+        this.makeCommonMetaTags(data);
       }
       getOrDefault(prop, name) {
         if (prop) {
