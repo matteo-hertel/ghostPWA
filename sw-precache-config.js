@@ -34,5 +34,10 @@ module.exports = {
       urlPattern: /https:\/\/fonts.googleapis.com\/*/,
       handler: "fastest"
     }
+    ,
+    {
+      urlPattern: /https:\/\/cdn.matteohertel.com\/*/,
+      handler: "fastest"
+    }
   ]
 };
