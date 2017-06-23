@@ -39,7 +39,13 @@
         children.map((child) => {
           child[this.childrenProperty] = n;
         })
-        this.dispatchEvent(new CustomEvent('data-update', { detail: { data: n, property: this.childrenProperty } }));
+        this.dispatchEvent(new CustomEvent('data-update', {
+          detail: {
+            data: n,
+            property: this.childrenProperty
+          }
+        }
+        ));
 
       }
       activateComponent() {
