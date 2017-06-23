@@ -22,19 +22,19 @@
             }
             static get properties() {
                 let staticConfig = {
-                    baseUrl: `https://ghost.buildforyou.it/ghost/api/v0.1/`,
-                    client_id: "ghost-frontend",
-                    client_secret: "084fa92de65d",
-                    blog_title: "A song of Bugs and Features",
+                    baseUrl: `http://localhost:8112/ghost/api/v0.1/`,
+                    client_id: "clientID",
+                    client_secret: "clientSecret",
+                    blog_title: "Blog Title",
                     blog_url: `${window.location.href}${window.location.port ? `:${window.location.port}` : ""}`,
-                    cdn_url: "https://cdn.matteohertel.com",
+                    cdn_url: "https://your.cdn.ext",
                     seoDefaults: {
-                        site_name: "A song of Bugs and Features",
-                        title: "A song of Bugs and Features",
-                        meta_description: "A journal of my (dis)adventures in the world of software development.",
-                        publisher_handle: "@MHDev91",
+                        site_name: "Blog Title",
+                        title: "Blog Title",
+                        meta_description: "default meta description",
+                        publisher_handle: "@twitterHandle",
                         twitter_card: "summary_large_image",
-                        fb_admin: "100001488865956"
+                        fb_admin: "facebookID"
                     }
                 }
                 let dynamicConfig = {
