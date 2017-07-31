@@ -69,3 +69,6 @@ settings.json
 perfomanceTest
 
 .DS_Store
+
+## Blog
+blog-config.prod.html

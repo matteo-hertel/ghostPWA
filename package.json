@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "polymner serve -o",
+    "start": "polymer serve -o -p 8081",
     "build": "gulp build",
     "preperformance-test": "rm -rf ./perfomanceTest",
     "performance-test": "sitespeed.io --outputFolder perfomanceTest",

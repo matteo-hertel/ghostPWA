@@ -32,7 +32,7 @@
         </style>
         <div class="start layout horizontal">
             <div class="right-pad">
-                <iron-image class="round" sizing="cover" preload fade src="[[author.image]]"></iron-image>
+                <iron-image class="round" sizing="cover" preload fade src="[[_checkImagePrefix(author.image)]]"></iron-image>
             </div>
             <div class="flex">
                 <p><b>[[author.name]]</b></p>
@@ -64,6 +64,15 @@
                         value: false
                     }
                 };
+            }
+
+            _checkImagePrefix(image) {
+                function qualifyURL(url) {
+                    var a = document.createElement('a');
+                    a.href = url;
+                    return a.href;
+                }
+                return qualifyURL(image);
             }
         }
 
