@@ -156,6 +156,11 @@
         super.ready();
         this.addEventListeners();
         this.handleServiceWorkers();
+
+        Polymer.RenderStatus.afterNextRender(this, () => {
+          this.removeAttribute('unresolved');
+          /* Other lazy code here */
+        });
       }
       addEventListeners() {
         this.addEventListener('404', e => this.changeRoute("not-found"));

@@ -1,6 +1,6 @@
 {
-  "name": "ghostPWA",
-  "short_name": "ghostPWA",
+  "name": "MHBlog",
+  "short_name": "MHBlog",
   "icons": [
     {
       "src": "https://cdn.matteohertel.com/blog/logo/full/logo.svg",

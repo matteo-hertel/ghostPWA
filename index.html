@@ -5,8 +5,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
   <meta name="theme-color" content="#000000">
+  <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="MHBlog">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="MHBlog">
+
+  <!-- Homescreen icons -->
+  <link rel="apple-touch-icon" href="https://cdn.matteohertel.com/blog/logo/full/logo.svg">
+  <link rel="apple-touch-icon" sizes="96x96" href="https://cdn.matteohertel.com/blog/logo/full/logo.svg">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://cdn.matteohertel.com/blog/logo/full/logo.svg">
+  <link rel="apple-touch-icon" sizes="192x192" href="https://cdn.matteohertel.com/blog/logo/full/logo.svg">
+
+  <!-- Tile icon for Windows 8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="https://cdn.matteohertel.com/blog/logo/full/logo.svg">
+  <meta name="msapplication-TileColor" content="#000000">
+  <meta name="msapplication-tap-highlight" content="no">
   <link rel="icon" href="https://cdn.matteohertel.com/blog/logo/favicon/favicon.ico">
-  <title></title>
+  <title>MHBlog</title>
   <meta name="description" content="">
   <!-- Schema.org markup for Google+ -->
   <meta itemprop="name" content="" />
@@ -38,8 +57,6 @@
   <!-- See https://goo.gl/OOhYW5 -->
   <link rel="manifest" href="/manifest.json">
 
-  <script src="/bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-
   <link rel="import" href="/src/blog-app/blog-app.html" async>
   <style>
     html {
@@ -64,15 +81,50 @@
       font-size: 18px;
       line-height: 1.4;
     }
+
+    [unresolved] {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .logo {
+      width: 100%;
+      height: 180px;
+      background: url(https://cdn.matteohertel.com/blog/logo/full/logo.svg);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: contain;
+      margin: 10px 0 15px 0;
+    }
+
+    [unresolved] p {
+      font-size: 30px;
+      padding: 20px;
+      text-align: center;
+    }
   </style>
 </head>
 
 <body>
-  <blog-app></blog-app>
+  <blog-app unresolved>
+    <div class='logo'></div>
+    <p>Hold on, some magic is happening in the background, the conten will be available in a moment!</p>
+  </blog-app>
   <script type="application/ld+json" id="structuredData"></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js');
+    }
+    var webComponentsSupported = ('registerElement' in document
+      && 'import' in document.createElement('link')
+      && 'content' in document.createElement('template'));
+
+    if (!webComponentsSupported) {
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = '/bower_components/webcomponentsjs/webcomponents-lite.js';
+      document.head.appendChild(script);
     }
   </script>
 </body>
