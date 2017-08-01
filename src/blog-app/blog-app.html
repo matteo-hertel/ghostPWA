@@ -13,6 +13,7 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="./../config/blog-config.html">
 <link rel="import" href="../temp/blog-post.html">
 <link rel="import" href="../temp/blog-posts.html">
@@ -76,6 +77,12 @@
         background-size: contain;
         margin: 10px 0 15px 0;
       }
+
+      .toast-button {
+        text-transform: none;
+        color: #37A0CE;
+        margin-left: 15px;
+      }
     </style>
     <blog-config></blog-config>
     <app-location route="{{route}}"></app-location>
@@ -123,6 +130,9 @@
         <blog-404 name="404"></blog-404>
       </iron-pages>
     </blog-seo>
+    <paper-toast id="newVersion" duration="0" text="A new version is available, just refresh the page">
+      <paper-button class="toast-button" on-tap="reload">Refresh!</paper-button>
+    </paper-toast>
 
   </template>
 
@@ -171,8 +181,7 @@
           navigator.serviceWorker.controller.addEventListener('statechange',
             (event) => {
               if (event.target.state === 'redundant') {
-                // this.$.newVersion.open();
-                console.log("redundant");
+                this.$.newVersion.open();
               }
             });
         }
@@ -195,6 +204,9 @@
       }
       toggleDrawer() {
         this.$.drawer.toggle();
+      }
+      reload() {
+        window.location.reload();
       }
     }
 

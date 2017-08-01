@@ -78,24 +78,24 @@ function build() {
           .pipe(gulpif(/\.css$/, cssSlam())) // Install css-slam to use
           .pipe(gulpif(/\.html$/, cssSlam()))
           .pipe(
-            gulpif(
-              /\.html$/,
-              htmlMinifier({
-                collapseWhitespace: true,
-                removeAttributeQuotes: true,
-                removeOptionalTags: true,
-                removeRedundantAttributes: true,
-                removeScriptTypeAttributes: true,
-                removeStyleLinkTypeAttributes: true,
-                removeTagWhitespace: true,
-                sortAttributes: true,
-                sortClassName: true,
-                useShortDoctype: true,
-                minifyCss: true,
-                minifyJs: true,
-                removeComments: true
-              })
-            )
+          gulpif(
+            /\.html$/,
+            htmlMinifier({
+              collapseWhitespace: true,
+              removeAttributeQuotes: true,
+              removeOptionalTags: true,
+              removeRedundantAttributes: true,
+              removeScriptTypeAttributes: true,
+              removeStyleLinkTypeAttributes: true,
+              removeTagWhitespace: true,
+              sortAttributes: true,
+              sortClassName: true,
+              useShortDoctype: true,
+              minifyCss: true,
+              minifyJs: true,
+              removeComments: true
+            })
+          )
           )
           .pipe(strip())
           .pipe(gulpif(/\.html$|\.css$|\.js$/, removeEmptyLines()))
@@ -111,24 +111,24 @@ function build() {
           .pipe(gulpif(/\.css$/, cssSlam())) // css slam for css
           .pipe(gulpif(/\.html$/, cssSlam())) //remove css in html
           .pipe(
-            gulpif(
-              /\.html$/,
-              htmlMinifier({
-                collapseWhitespace: true,
-                removeAttributeQuotes: true,
-                removeOptionalTags: true,
-                removeRedundantAttributes: true,
-                removeScriptTypeAttributes: true,
-                removeStyleLinkTypeAttributes: true,
-                removeTagWhitespace: true,
-                sortAttributes: true,
-                sortClassName: true,
-                useShortDoctype: true,
-                minifyCss: true,
-                minifyJs: true,
-                removeComments: true
-              })
-            )
+          gulpif(
+            /\.html$/,
+            htmlMinifier({
+              collapseWhitespace: true,
+              removeAttributeQuotes: true,
+              removeOptionalTags: true,
+              removeRedundantAttributes: true,
+              removeScriptTypeAttributes: true,
+              removeStyleLinkTypeAttributes: true,
+              removeTagWhitespace: true,
+              sortAttributes: true,
+              sortClassName: true,
+              useShortDoctype: true,
+              minifyCss: true,
+              minifyJs: true,
+              removeComments: true
+            })
+          )
           ) // Install gulp-html-minifier to use
           .pipe(strip())
           .pipe(gulpif(/\.html$|\.css$|\.js$/, removeEmptyLines()))
@@ -176,4 +176,3 @@ function build() {
 }
 
 gulp.task("build", build);
-let schemas = ["http", "ws"];
