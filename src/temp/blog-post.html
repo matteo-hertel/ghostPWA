@@ -37,6 +37,10 @@
                 width: 100%;
                 background: lightgray;
             }
+
+            iron-image.post-image {
+                background: transparent;
+            }
         </style>
         <div class="layout vertical center-center">
             <iron-image sizing="cover" preload fade src="[[post.image]]"></iron-image>
@@ -74,7 +78,30 @@
                 if (!n || !n.html) {
                     return this.$.output.innerHTML = "";
                 }
-                this.$.output.innerHTML = n.html;
+                let dom = this._replaceImagesWithIronImages(n.html);
+                this.$.output.innerHTML = dom.innerHTML;
+            }
+            _replaceImagesWithIronImages(html) {
+                let div = document.createElement("div");
+                div.innerHTML = html;
+                let images = div.querySelectorAll("img");
+                images.forEach((img) => {
+                    let ironImage = this._makePostIronImage();
+                    Array.from(img.attributes).map((attribute) => {
+                        ironImage.setAttribute(attribute.name, attribute.value);
+                    })
+                    img.parentNode.replaceChild(ironImage, img);
+                });
+                return div;
+            }
+
+            _makePostIronImage() {
+                let ironImage = document.createElement("iron-image");
+                ironImage.setAttribute("sizing", "contain");
+                ironImage.setAttribute("preload", "");
+                ironImage.setAttribute("fade", "");
+                ironImage.classList.add("post-image");
+                return ironImage;
             }
         }
 
