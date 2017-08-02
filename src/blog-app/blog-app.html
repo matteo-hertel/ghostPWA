@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="./../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
 <link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/app-route/app-route.html">
@@ -130,7 +131,7 @@
         <blog-404 name="404"></blog-404>
       </iron-pages>
     </blog-seo>
-    <paper-toast id="newVersion" duration="0" text="A new version is available, just refresh the page">
+    <paper-toast id="newVersion" opened duration="0" text="A new version is available, just refresh the page">
       <paper-button class="toast-button" on-tap="reload">Refresh!</paper-button>
     </paper-toast>
 
@@ -141,7 +142,7 @@
      * @customElement
      * @polymer
      */
-    class BlogApp extends Polymer.Element {
+    class BlogApp extends Polymer.GestureEventListeners(Polymer.Element) {
       static get is() {
         return 'blog-app';
       }
