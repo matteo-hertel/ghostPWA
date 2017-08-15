@@ -81,7 +81,7 @@
         this.setMetaTag('meta[property="og:title"]', "content", this.getOrDefault((data.meta_title || data.title), "title"));
         this.setMetaTag('meta[property="og:type"]', "content", this.getOrDefault("article"));
         this.setMetaTag('meta[property="og:url"]', "content", this.getOrDefault(window.location.href));
-        this.setMetaTag('meta[property="og:image"]', "content", this.getOrDefault(data.meta_description, "image"));
+        this.setMetaTag('meta[property="og:image"]', "content", this.getOrDefault(data.image, "image"));
         this.setMetaTag('meta[property="og:description"]', "content", this.getOrDefault(data.meta_description, "meta_description"));
         this.setMetaTag('meta[property="og:site_name"]', "content", this.getOrDefault(data.site_name, "site_name"));
         //end Open Graph data
