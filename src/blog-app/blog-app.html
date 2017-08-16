@@ -116,19 +116,29 @@
     </app-drawer>
     <blog-seo>
       <iron-pages id="pages" attr-for-selected="name" selected=[[selectedRoute]] selected-attribute="active" fallback-selection="404">
+        <!-- Homepage -->
         <broadcaster-mediator name="home" target="blog-homepage">
           <blog-posts-mediator children-property="featuredPosts" featured></blog-posts-mediator>
           <blog-posts-mediator></blog-posts-mediator>
           <blog-homepage></blog-homepage>
         </broadcaster-mediator>
+        <!-- End Homepage -->
+
+        <!-- Posts -->
         <blog-posts-mediator name="posts" subroute=[[tail]]>
           <blog-posts grid-seiz="3"></blog-posts>
         </blog-posts-mediator>
+        <!-- End Posts -->
 
+        <!-- Single post -->
         <blog-post-mediator name="post" subroute=[[tail]]>
           <blog-post></blog-post>
         </blog-post-mediator>
+        <!-- End Single post -->
+
+        <!-- 404 -->
         <blog-404 name="404"></blog-404>
+        <!-- End 404 -->
       </iron-pages>
     </blog-seo>
     <paper-toast id="newVersion" duration="0" text="A new version is available, just refresh the page">
