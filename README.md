@@ -1,6 +1,6 @@
 # \<blog-app\>
 
-A SPA/PWA for ghost build in polymer (I'll call it PPWA Polymer Progressive Web App)
+A SPA/PWA for ghost build in polymer (I'll call it PPWA Polymer Progressive Web App) published here [https://blog.matteohertel.com/](https://blog.matteohertel.com/)
 
 ## Install the Polymer-CLI
 
