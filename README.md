@@ -2,6 +2,9 @@
 
 A SPA/PWA for ghost build in polymer (I'll call it PPWA Polymer Progressive Web App) published here [https://blog.matteohertel.com/](https://blog.matteohertel.com/)
 
+## Lighthouse score
+![Lighthouse Score](/docs/asset/lighthouse.png)
+
 ## Install the Polymer-CLI
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
