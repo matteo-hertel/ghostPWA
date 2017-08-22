@@ -47,7 +47,6 @@ jspm_packages
 # Output of 'npm pack'
 *.tgz
 
-
 ### Bower ###
 bower_components
 .bower-cache
@@ -59,16 +58,12 @@ bower_components
 ### Polymer ###
 #Installed components via bower
 bower_components/
-build/
+build
 
 ### VisualStudio Code ###
 settings.json
 .vscode
 
-## performance
-perfomanceTest
-
 .DS_Store
-
 ## Blog
 blog-config.prod.html
